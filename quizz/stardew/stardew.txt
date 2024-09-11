@@ -1,0 +1,37 @@
+Documentation Utilisateur - Quiz Stardew Valley
+
+Introduction
+
+Bienvenue dans le Quiz Stardew Valley ! 
+Ce quiz est conçu pour tester vos connaissances sur le jeu vidéo Stardew Valley. Répondez aux questions posées et voyez si vous avez ce qu'il faut pour être un véritable expert de la vallée !
+
+Comment Jouer
+
+Navigation :
+
+Pour revenir à la page d'accueil, cliquez sur le bouton "Retour" dans la barre de navigation en haut de la page.
+Répondre aux Questions :
+Sur la page principale du quiz, vous verrez une question avec une image et plusieurs options de réponse.
+Sélectionnez l'option qui correspond à votre réponse en cliquant sur le bouton radio à côté.
+Une fois que vous avez sélectionné votre réponse, cliquez sur le bouton "Valider".
+
+Vérification de la Réponse :
+Après avoir cliqué sur le bouton "Valider", vous verrez un message indiquant si votre réponse était correcte ou non.
+Si votre réponse est correcte, vous gagnez un point !
+Si votre réponse est incorrecte, vous ne gagnez pas de point, mais ne vous inquiétez pas, vous pouvez toujours essayer à nouveau.
+
+Passer à la Question Suivante :
+Une fois que vous avez répondu à une question, un nouveau bouton "Suivant" apparaîtra.
+Cliquez sur ce bouton pour passer à la question suivante.
+
+Fin du Quiz :
+Continuez à répondre aux questions jusqu'à ce que vous atteigniez la fin du quiz.
+Une fois que vous avez terminé toutes les questions, vous verrez votre score final.
+
+Conseils pour Réussir
+Lisez attentivement chaque question et examinez les images fournies.
+Prenez votre temps pour choisir la meilleure réponse.
+Si vous n'êtes pas sûr de la réponse, faites confiance à votre instinct !
+
+Bonne Chance !
+Montrez-nous ce que vous savez sur Stardew Valley et amusez-vous bien en jouant au quiz ! Si vous avez des questions ou des commentaires, n'hésitez pas à nous contacter.

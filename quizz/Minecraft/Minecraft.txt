@@ -1,0 +1,28 @@
+Documentation Utilisateur - Quiz Minecraft
+
+Bienvenue sur le quiz Minecraft ! Ce guide vous aidera à naviguer à travers ce quiz interactif.
+
+Navigation
+
+Retour
+Ce bouton vous permet de retourner à la page précédente. Cliquez dessus pour revenir à la page principale du quiz.
+
+Quiz
+
+Question
+Cette section affiche la question actuelle du quiz. Vous devrez choisir une réponse parmi les options fournies.
+
+Réponses
+Les réponses possibles sont affichées sous forme de boutons radio. Sélectionnez une seule réponse en cliquant sur le bouton radio correspondant à votre choix.
+
+Valider
+Une fois que vous avez sélectionné une réponse, cliquez sur le bouton "Valider" pour soumettre votre réponse. Vous verrez alors si votre réponse est correcte ou non.
+
+Suivant
+Après avoir validé une réponse, le bouton "Suivant" apparaîtra. Cliquez sur ce bouton pour passer à la question suivante.
+
+Résultat
+Le résultat final du quiz sera affiché dans la section inférieure de la carte après avoir répondu à toutes les questions.
+
+Note
+Assurez-vous d'avoir une connexion Internet active pour charger les ressources externes nécessaires (CSS et JavaScript). Pour une expérience optimale, assurez-vous d'utiliser un navigateur compatible.
