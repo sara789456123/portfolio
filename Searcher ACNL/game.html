@@ -1,13 +1,81 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil</title>
-</head>
-<body>
-    <div>ACNH</div>
-    <link rel="stylesheet" href="https://www.animalcrossing-online.com/new-horizons-switch/">line de ref
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recherche d'Objets - Animal Crossing</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .search-container {
+        margin-bottom: 20px;
+      }
+      .search-container input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .results-container {
+        margin-top: 20px;
+      }
+      .result-item {
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Recherche d'Objets - Animal Crossing: New Horizons</h1>
+    <a href="../index.html" class="btn btn-light">Retour</a>
+    <div class="search-container">
+      <input type="text" id="search-bar" placeholder="Rechercher un objet..." />
+    </div>
+    <div class="results-container" id="results-container">
+      <!-- Les résultats de recherche apparaîtront ici -->
+    </div>
 
-</body>
+    <script>
+      // Exemple de données d'objets (à remplacer par des données réelles)
+      const items = [
+        {
+          name: "Canapé",
+          description: "Un canapé confortable pour votre maison.",
+        },
+        { name: "Lit", description: "Un lit douillet pour bien dormir." },
+        { name: "Table", description: "Une table élégante pour votre salon." },
+        {
+          name: "Chaise",
+          description: "Une chaise confortable pour s'asseoir.",
+        },
+        // Ajoutez plus d'objets ici
+      ];
+
+      const searchBar = document.getElementById("search-bar");
+      const resultsContainer = document.getElementById("results-container");
+
+      searchBar.addEventListener("input", (event) => {
+        const query = event.target.value.toLowerCase();
+        const filteredItems = items.filter((item) =>
+          item.name.toLowerCase().includes(query)
+        );
+        displayResults(filteredItems);
+      });
+
+      function displayResults(items) {
+        resultsContainer.innerHTML = "";
+        items.forEach((item) => {
+          const itemDiv = document.createElement("div");
+          itemDiv.classList.add("result-item");
+          itemDiv.innerHTML = `<strong>${item.name}</strong>: ${item.description}`;
+          resultsContainer.appendChild(itemDiv);
+        });
+      }
+    </script>
+  </body>
 </html>

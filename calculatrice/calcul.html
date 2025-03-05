@@ -1,54 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="icon" type="image/png" href="img.icons8.png">
-    <link href="style.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="img.icons8.png" />
+    <link href="style.css" rel="stylesheet" />
     <title>Calculatrice</title>
+  </head>
+  <body>
+    <button id="retour" onclick="location.href='../index.html';">Retour</button>
 
-</head>
-<body>
-    <p>Retour <a href="../index.html">ce lien</a>.</p>
     <div class="calculator">
-        <input type="text" id="result" disabled>
-        <button class="red" onclick="clearResult()">Ac</button>
-        <button class="red" onclick="clearResult()">C</button>
-        <button class="orange" onclick="getResult('%')">%</button>
-        <button class="orange" onclick="getResult('/')">/</button>
-        <button onclick="getResult('7')">7</button>
-        <button onclick="getResult('8')">8</button>
-        <button onclick="getResult('9')">9</button>
-        <button class="orange" onclick="getResult('*')">*</button>
-        <button onclick="getResult('4')">4</button>
-        <button onclick="getResult('5')">5</button>
-        <button onclick="getResult('6')">6</button>
-        <button class="orange" onclick="getResult('-')">-</button>
-        <button onclick="getResult('1')">1</button>
-        <button onclick="getResult('2')">2</button>
-        <button onclick="getResult('3')">3</button>
-        <button class="orange" onclick="getResult('+')">+</button>
-        <button onclick="getResult('00')">00</button>
-        <button onclick="getResult('0')">0</button>
-        <button onclick="getResult('.')">.</button>
-        <button class="orange" onclick="getResult('=')">=</button>
+      <input type="text" id="result" disabled />
+      <button class="red" onclick="clearResult()">Ac</button>
+      <button class="red" onclick="clearResult()">C</button>
+      <button class="orange" onclick="getResult('%')">%</button>
+      <button class="orange" onclick="getResult('/')">/</button>
+      <button onclick="getResult('7')">7</button>
+      <button onclick="getResult('8')">8</button>
+      <button onclick="getResult('9')">9</button>
+      <button class="orange" onclick="getResult('*')">*</button>
+      <button onclick="getResult('4')">4</button>
+      <button onclick="getResult('5')">5</button>
+      <button onclick="getResult('6')">6</button>
+      <button class="orange" onclick="getResult('-')">-</button>
+      <button onclick="getResult('1')">1</button>
+      <button onclick="getResult('2')">2</button>
+      <button onclick="getResult('3')">3</button>
+      <button class="orange" onclick="getResult('+')">+</button>
+      <button onclick="getResult('00')">00</button>
+      <button onclick="getResult('0')">0</button>
+      <button onclick="getResult('.')">.</button>
+      <button class="orange" onclick="getResult('=')">=</button>
     </div>
 
     <script>
-        let result = document.getElementById("result");
+      let result = document.getElementById("result");
 
-        function getResult(value){
-            if (value == "="){
-                result.value = eval(result.value);
-            }else{
-                result.value += value;
-            }
+      function getResult(value) {
+        if (value == "=") {
+          result.value = eval(result.value);
+        } else {
+          result.value += value;
         }
+      }
 
-        function clearResult(){
-            result.value="";
-        }
+      function clearResult() {
+        result.value = "";
+      }
     </script>
-
-</body>
+  </body>
 </html>

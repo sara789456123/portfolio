@@ -4,11 +4,347 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .veille-img-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .veille-img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .work-img a {
+            display: block;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .work-img img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s;
+        }
+
+        .work-img img:hover {
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
-    <marquee behavior="" direction="right">
-coucou    </marquee>
-<a href="quizz/quizz.html" class="btn btn-primary">Quizz</a>
-<p>Calculatrice <a href="calculatrice/calcul.html">ce lien</a>.</p>
+    <header class="l-header">
+        <nav class="nav bd-grid">
+            <div>
+                <a href="#" class="nav-logo">skibidi</a>
+            </div>
+
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link active">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link">A propos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#skills" class="nav-link">Compétences</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#work" class="nav-link">Projets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#stage" class="nav-link">Stage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#veille" class="nav-link">Veille Technologique</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="nav-toggle" id="nav-toggle">
+                <i class="bx bx-menu"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main class="l-main">
+        <section class="home bd-grid" id="home">
+            <marquee behavior="" direction="right"> coucou </marquee>
+
+            <div class="home-data">
+                <h1 class="home-title">
+                    Portfolio, <br />de <span class="home-title-color">Gervoise Sara</span><br />
+                    étudiante en BTS SIO </span><br />(SLAM)
+                </h1>
+                <button class="btn" onclick="location.href='#contact'">
+                    Contact
+                </button>
+            </div>
+
+            <div class="home-social">
+                <a href="#" class="home-social-icon">
+                    <i class="bx bxl-linkedin"></i>
+                </a>
+                <a href="#" class="home-social-icon">
+                    <i class="bx bxl-instagram"></i>
+                </a>
+                <a href="#" class="home-social-icon"><i class="bx bxl-github"></i></a>
+            </div>
+
+            <div class="home-img">
+                <img src="https://i.postimg.cc/65sT6Z3M/perfil.png" alt="image">
+            </div>
+        </section>
+
+        <section class="about section" id="about">
+            <h2 class="section-title">About</h2>
+
+            <div class="about-container">
+                <div>
+                    <h2 class="about-subtitle">Présentation</h2>
+                    <p class="about-text">
+                        Salut, moi c'est Sara GERVOISE👋
+Je suis actuellement étudiante au lycée Raymon Pointcaré en deuxième année de BTS SIO (Services Informatiques aux Organisations) dans l'option SLAM (Solutions Logicielles et Application Métier) qui en gros est une option spécialisée pour le développement
+
+Actuellement toujours en cours d'étude , je vous propose sur ce portfolio de retrouver ci-dessous les différentes études, et projet professionnel que j'ai pu entreprendre au sein de ma carrière.
+
+Vous retrouverez ci-dessous mon CV ainsi que mes différents projets 👩‍💻
+                    </p><br>
+                    <button class="btn" onclick="location.href='CV.pdf';">
+                        Mon CV
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills section" id="skills">
+            <h2 class="section-title">Compétences</h2>
+
+            <div class="skills-container bd-grid">
+                <div>
+                    <h2 class="skills-subtitle">Professional Skills</h2>
+                    <p class="skills-text">
+                        I love to think outside the box and bring unique ideas to life
+                        through design, I have proficiency in HTML, CSS, and JavaScript,
+                        that ensure that my designs are not only beautiful but also
+                        functional. I prioritize the needs and preferences of users,
+                        conducting research to understand their behaviors and preferences.
+                    </p>
+
+                    <div class="skills-data">
+                        <div class="skills-names">
+                            <i class="bx bxl-html5 skills-icon"></i>
+                            <span class="skills-name">HTML5</span>
+                        </div>
+
+                        <div>
+                            <span class="skills-percentage">95%</span>
+                        </div>
+
+                        <div class="skills-bar skills-html"></div>
+                    </div>
+
+                    <div class="skills-data">
+                        <div class="skills-names">
+                            <i class="bx bxl-css3 skills-icon"></i>
+                            <span class="skills-name">CSS3</span>
+                        </div>
+
+                        <div>
+                            <span class="skills-percentage">85%</span>
+                        </div>
+
+                        <div class="skills-bar skills-css"></div>
+                    </div>
+
+                    <div class="skills-data">
+                        <div class="skills-names">
+                            <i class="bx bxl-javascript skills-icon"></i>
+                            <span class="skills-name">JAVASCRIPT</span>
+                        </div>
+
+                        <div>
+                            <span class="skills-percentage">65%</span>
+                        </div>
+
+                        <div class="skills-bar skills-js"></div>
+                    </div>
+
+                    <div class="skills-data">
+                        <div class="skills-names">
+                            <i class="bx bxs-paint skills-icon"></i>
+                            <span class="skills-name">Php</span>
+                        </div>
+
+                        <div>
+                            <span class="skills-percentage">85%</span>
+                        </div>
+
+                        <div class="skills-bar skills-ux"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <img src="https://i.postimg.cc/52LWbPyt/work3.jpg" alt="image" class="skills-img">
+                </div>
+            </div>
+        </section>
+
+        <section class="work section" id="work">
+            <h2 class="section-title">Projets</h2>
+
+           
+            <div class="work-container bd-grid">
+                <div class="work-img">
+                    <h2>Quizz</h2>
+                    <a href="quizz/quizz.html">
+                        <img src="quizz.png" alt="image">
+                    </a>
+                </div>
+
+                <div class="work-img">
+                    <h2>Calculatrice</h2>
+                    <a href="calculatrice/calcul.html">
+                        <img src="calculatrice.png" alt="image">
+                    </a>
+                </div>
+
+                <div class="work-img">
+                    <h2>Searcher ACNL</h2>
+                    <a href="Searcher ACNL/game.html">
+                        <img src="https://i.postimg.cc/52LWbPyt/work3.jpg" alt="image">
+                    </a>
+                </div>
+
+                <div class="work-img">
+                    <a href="https://example.com/project4">
+                        <img src="https://i.postimg.cc/fW1wsSCB/work4.jpg" alt="image">
+                    </a>
+                </div>
+
+                <div class="work-img">
+                    <a href="https://example.com/project5">
+                        <img src="https://i.postimg.cc/m2MTgZ6R/work5.jpg" alt="image">
+                    </a>
+                </div>
+
+                <div class="work-img">
+                    <a href="https://example.com/project6">
+                        <img src="https://i.postimg.cc/Qd3h9LR7/work6.jpg" alt="image">
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="work section" id="stage">
+            <h2 class="section-title">Stage</h2>
+            <div class="work-container bd-grid">
+                <div class="work-img">
+                    <a href="Stage1.html">
+                        <img src="https://i.postimg.cc/NM0n9bsm/work1.jpg" alt="image">
+                    </a>
+                    <button class="btn" onclick="location.href='Stage1.html';">
+                        1er Stage
+                    </button>
+                </div>
+
+                <div class="work-img">
+                    <a href="Stage2.html">
+                        <img src="https://i.postimg.cc/tJZmDTVg/work2.jpg" alt="image">
+                    </a>
+                    <button class="btn" onclick="location.href='Stage2.html';">
+                        2ème Stage
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="work section" id="veille">
+            <h2 class="section-title">Veille Technologique</h2>
+            <div class="veille-img-container">
+                <a href="VeilleTechno.html">
+                    <img src="https://siecledigital.fr/wp-content/uploads/2018/02/flutter-bandeau.jpg" alt="image">
+                </a>
+            </div>
+            <button class="btn" onclick="location.href='VeilleTechno.html';">
+                Ma Veille Technologique
+            </button>
+        </section>
+
+        <section class="work section" id="stage">
+            <h2 class="section-title">Diplome</h2>
+            <div class="work-container bd-grid">
+                <div class="work-img">
+                        <img src="Pix.png" alt="image">
+                    </a>
+                           
+            <button class="btn" onclick="location.href='pix.pdf';">
+                Mon attestation Pix
+            </button>
+                </div>
+            <div class="work-img">
+                <img src="Secnum.png" alt="image">
+            </a>
+                       
+        <button class="btn" onclick="location.href='Secnum.pdf';">
+            Mon attestation Secnum
+        </button>
+            </div>
+        </section>
+
+        <section class="contact section" id="contact">
+            <h2 class="section-title">Contact</h2>
+
+            <div class="contact-container bd-grid">
+                <form action="" class="contact-form">
+                    <input type="text" placeholder="Name" class="contact-input">
+                    <input type="email" placeholder="Email" class="contact-input">
+                    <textarea name="" id="" cols="0" rows="10" class="contact-input"></textarea>
+
+                    <input type="button" value="Send" class="contact-button button">
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p class="footer-title">Marlon</p>
+
+        <div class="footer-social">
+            <a href="#" class="footer-icon"><i class="bx bxl-facebook"></i></a>
+            <a href="#" class="footer-icon"><i class="bx bxl-instagram"></i></a>
+            <a href="#" class="footer-icon"><i class="bx bxl-twitter"></i></a>
+        </div>
+
+        <p>&#169; 2024 Copyright all rights reserved</p>
+    </footer>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="main.js"></script>
 </body>
 </html>
