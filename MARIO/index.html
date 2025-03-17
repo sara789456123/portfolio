@@ -1,17 +1,335 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mini Mario Game</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Cat Game</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #87ceeb;
+      }
+      #record {
+        font-size: 24px;
+        font-family: Arial, sans-serif;
+        margin-bottom: 10px;
+        color: black;
+      }
+      #gameCanvas {
+        border: 2px solid black;
+        margin-bottom: 20px;
+      }
+      #restartButton {
+        padding: 17px 40px;
+        border-radius: 10px;
+        border: 0;
+        background-color: rgb(255, 56, 86);
+        letter-spacing: 1.5px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        box-shadow: rgb(201, 46, 70) 0px 10px 0px 0px;
+        color: hsl(0, 0%, 100%);
+        cursor: pointer;
+      }
+      #restartButton:hover {
+        box-shadow: rgb(201, 46, 70) 0px 7px 0px 0px;
+      }
+      #restartButton:active {
+        background-color: rgb(255, 56, 86);
+        box-shadow: rgb(201, 46, 70) 0px 0px 0px 0px;
+        transform: translateY(5px);
+        transition: 200ms;
+      }
+    </style>
   </head>
   <body>
-    <br /><br /><br /><br />
-    <h1>Jeu de plateforme</h1>
-    <br /><br />
-    <canvas id="gameCanvas" width="800" height="400"></canvas><br /><br />
+    <div id="record">Record: 0</div>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
     <button id="restartButton">Restart</button>
-    <script src="game.js"></script>
+
+    <script>
+      const canvas = document.getElementById("gameCanvas");
+      const ctx = canvas.getContext("2d");
+      const restartButton = document.getElementById("restartButton");
+      const recordElement = document.getElementById("record");
+
+      const cat = {
+        x: 0, // Initial x position will be set based on the first platform
+        y: 0, // Initial y position will be set based on the first platform
+        width: 50,
+        height: 50,
+        color: "orange",
+        dx: 0,
+        dy: 0,
+        speed: 3,
+        jumpSpeed: 5,
+        jumpStrength: -15, // Reduced jump strength for a slower jump
+        isJumping: false,
+      };
+
+      let platforms = [];
+      let gameOver = false;
+      let cameraX = 0;
+      let score = 0; // Initialize the score
+      let record = 0; // Initialize the record score
+      let hasLostOnce = false; // Flag to track if the game has been lost before
+      const platformSpacing = 200; // Space between platforms
+      const gravity = 0.7; // Slightly increased gravity
+      const minPlatformHeight = 150; // Minimum height for platforms
+      const maxPlatformHeight = 300; // Maximum height for platforms
+
+      function drawCat() {
+        // Draw the body
+        ctx.fillStyle = "orange";
+        ctx.fillRect(
+          cat.x - cameraX + 15,
+          cat.y + 20,
+          cat.width - 30,
+          cat.height - 20
+        );
+
+        // Draw the head
+        ctx.fillStyle = "orange";
+        ctx.beginPath();
+        ctx.arc(
+          cat.x - cameraX + cat.width / 2,
+          cat.y + 20,
+          15,
+          0,
+          Math.PI * 2
+        );
+        ctx.fill();
+
+        // Draw the ears
+        ctx.fillStyle = "orange";
+        ctx.beginPath();
+        ctx.moveTo(cat.x - cameraX + cat.width / 2 - 10, cat.y + 10);
+        ctx.lineTo(cat.x - cameraX + cat.width / 2 - 20, cat.y);
+        ctx.lineTo(cat.x - cameraX + cat.width / 2 - 15, cat.y + 5);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(cat.x - cameraX + cat.width / 2 + 10, cat.y + 10);
+        ctx.lineTo(cat.x - cameraX + cat.width / 2 + 20, cat.y);
+        ctx.lineTo(cat.x - cameraX + cat.width / 2 + 15, cat.y + 5);
+        ctx.fill();
+
+        // Draw the eyes
+        ctx.fillStyle = "white";
+        ctx.beginPath();
+        ctx.arc(
+          cat.x - cameraX + cat.width / 2 - 5,
+          cat.y + 18,
+          3,
+          0,
+          Math.PI * 2
+        );
+        ctx.arc(
+          cat.x - cameraX + cat.width / 2 + 5,
+          cat.y + 18,
+          3,
+          0,
+          Math.PI * 2
+        );
+        ctx.fill();
+
+        // Draw the pupils
+        ctx.fillStyle = "black";
+        ctx.beginPath();
+        ctx.arc(
+          cat.x - cameraX + cat.width / 2 - 5,
+          cat.y + 18,
+          1.5,
+          0,
+          Math.PI * 2
+        );
+        ctx.arc(
+          cat.x - cameraX + cat.width / 2 + 5,
+          cat.y + 18,
+          1.5,
+          0,
+          Math.PI * 2
+        );
+        ctx.fill();
+
+        // Draw the nose
+        ctx.fillStyle = "pink";
+        ctx.beginPath();
+        ctx.arc(cat.x - cameraX + cat.width / 2, cat.y + 23, 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Draw the mouth
+        ctx.strokeStyle = "black";
+        ctx.beginPath();
+        ctx.arc(cat.x - cameraX + cat.width / 2, cat.y + 25, 3, 0, Math.PI);
+        ctx.stroke();
+
+        // Draw the legs
+        ctx.fillStyle = "orange";
+        ctx.fillRect(cat.x - cameraX + 15, cat.y + 40, 10, 10);
+        ctx.fillRect(cat.x - cameraX + cat.width - 25, cat.y + 40, 10, 10);
+      }
+
+      function drawPlatforms() {
+        ctx.fillStyle = "green";
+        platforms.forEach((platform) => {
+          ctx.fillRect(
+            platform.x - cameraX,
+            platform.y,
+            platform.width,
+            platform.height
+          );
+        });
+      }
+
+      function drawScore() {
+        ctx.fillStyle = "black";
+        ctx.font = "24px Arial";
+        ctx.fillText(`Score: ${score}`, 10, 30);
+      }
+
+      function update() {
+        if (gameOver) return;
+
+        cat.y += cat.dy;
+        cat.x += cat.dx;
+
+        // Update the score based on Mario's movement
+        score += cat.dx;
+
+        // Update the record if the current score is higher
+        if (score > record) {
+          record = score;
+          recordElement.textContent = `Record: ${record}`; // Update the record element
+        }
+
+        cat.isJumping = true;
+        platforms.forEach((platform) => {
+          if (
+            cat.x < platform.x + platform.width &&
+            cat.x + cat.width > platform.x &&
+            cat.y < platform.y + platform.height &&
+            cat.y + cat.height > platform.y
+          ) {
+            cat.y = platform.y - cat.height;
+            cat.dy = 0;
+            cat.isJumping = false;
+          }
+        });
+
+        if (cat.y + cat.height > canvas.height) {
+          gameOver = true;
+          hasLostOnce = true; // Set the flag to true when the game is over
+        } else {
+          cat.dy += gravity;
+        }
+
+        if (cat.x + cat.width > canvas.width / 2) {
+          cameraX = cat.x - canvas.width / 2;
+        }
+
+        generatePlatforms();
+      }
+
+      function generatePlatforms() {
+        const lastPlatform = platforms[platforms.length - 1];
+        if (
+          !lastPlatform ||
+          lastPlatform.x < canvas.width + cameraX + platformSpacing
+        ) {
+          const platformWidth = Math.floor(Math.random() * 100) + 50;
+          const platformHeight = 10;
+          const platformX = lastPlatform ? lastPlatform.x + platformSpacing : 0;
+          const platformY = Math.floor(
+            Math.random() * (maxPlatformHeight - minPlatformHeight) +
+              minPlatformHeight
+          );
+
+          platforms.push({
+            x: platformX,
+            y: platformY,
+            width: platformWidth,
+            height: platformHeight,
+          });
+
+          // Set Mario's initial position on the first platform without jumping
+          if (platforms.length === 1) {
+            cat.x = platformX;
+            cat.y = platformY - cat.height;
+            cat.dy = 0; // Ensure no vertical movement
+          }
+        }
+      }
+
+      function gameLoop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "skyblue";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        drawPlatforms();
+        drawCat();
+        drawScore(); // Draw the score on the canvas
+
+        if (gameOver) {
+          ctx.fillStyle = "black";
+          ctx.font = "48px Arial";
+          ctx.fillText("Perdu", canvas.width / 2 - 50, canvas.height / 2);
+        } else {
+          update();
+          requestAnimationFrame(gameLoop);
+        }
+      }
+
+      function restartGame() {
+        platforms = [];
+        generatePlatforms(); // Generate initial platforms and set Mario's position
+        cat.dx = 0;
+        cat.dy = 0;
+        cat.isJumping = false;
+        gameOver = false;
+        cameraX = 0;
+        score = 0; // Reset the score
+
+        gameLoop();
+      }
+
+      document.addEventListener("keydown", (event) => {
+        if (gameOver) return;
+
+        switch (event.key) {
+          case "ArrowUp":
+            if (!cat.isJumping) {
+              cat.dy = cat.jumpStrength;
+            }
+            break;
+          case "ArrowLeft":
+            cat.dx = -cat.speed;
+            break;
+          case "ArrowRight":
+            cat.dx = cat.speed;
+            break;
+        }
+      });
+
+      document.addEventListener("keyup", (event) => {
+        switch (event.key) {
+          case "ArrowLeft":
+          case "ArrowRight":
+            cat.dx = 0;
+            break;
+        }
+      });
+
+      restartButton.addEventListener("click", restartGame);
+
+      generatePlatforms();
+      gameLoop();
+    </script>
   </body>
 </html>
