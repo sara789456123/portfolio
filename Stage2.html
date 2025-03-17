@@ -1,11 +1,208 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stage de deuxième année</title>
+    <link rel="stylesheet" href="styleStage2.css" />
+    <title>Rapport de Stage - Sendix</title>
   </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+
+    header {
+      background: #333;
+      color: white;
+      padding: 20px;
+      font-size: 24px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+      text-align: left;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: #fff;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .tech-icons-container {
+      display: flex;
+      gap: 60px; /* Augmente l'espace entre les icônes */
+      justify-content: center; /* Centre les icônes */
+      margin-top: 10px;
+    }
+
+    .icon {
+      width: 50px; /* Taille des icônes */
+      height: 50px; /* Taille des icônes */
+      border-radius: 0; /* Pas d'arrondi */
+    }
+
+    .btn {
+      display: inline-block;
+      margin: 20px 0;
+      padding: 12px 25px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #0056b3;
+    }
+    #retour {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+  </style>
   <body>
-    <a href="index.html" class="btn btn-primary">Accueil</a>
+    <header>Rapport de Stage - Sendix</header>
+    <div class="container">
+      <div class="card">
+        <button id="retour" onclick="location.href='index.html';">
+          Retour
+        </button>
+        <h2>Remerciements</h2>
+        <p>
+          Je tiens à remercier <strong>M. Maxime WUILLAUME</strong> pour son
+          encadrement et son soutien durant mon stage. Un grand merci également
+          à mon enseignant référent <strong>M. Charles PIGUET</strong> pour ses
+          conseils précieux.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Présentation de l'Entreprise</h2>
+        <p>
+          <strong>SENDIX</strong> est une micro-entreprise spécialisée dans le
+          développement web et les services informatiques. Fondée en 2014, elle
+          propose des services variés, allant de la création de sites web à la
+          gestion de bases de données.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Projet Principal - Wisikard</h2>
+        <p>
+          Durant mon stage, j’ai participé à la refonte du projet
+          <strong>Wisikard</strong>, une solution permettant de créer des cartes
+          de visite numériques accessibles via QR Code.
+        </p>
+        <p><strong>Technologies utilisées :</strong></p>
+        <div class="tech-icons-container">
+          <img
+            src="https://static-00.iconduck.com/assets.00/laravel-icon-497x512-uwybstke.png"
+            class="icon"
+            alt="Laravel"
+          />
+          <img
+            src="https://icon-icons.com/icons2/2148/PNG/512/tailwind_icon_131947.png"
+            class="icon"
+            alt="Tailwind CSS"
+          />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/7/73/Javascript-736400_960_720.png"
+            class="icon"
+            alt="JavaScript"
+          />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg"
+            class="icon"
+            alt="PHP"
+          />
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/4299/4299956.png"
+            class="icon"
+            alt="SQL"
+          />
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEc9A_S6BPxCDRp5WjMFEfXrpCu1ya2OO-Lw&s"
+            class="icon"
+            alt="HTML"
+          />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/800px-GitHub_Invertocat_Logo.svg.png"
+            class="icon"
+            alt="HTML"
+          />
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Autres Missions</h2>
+        <ul>
+          <li>Configuration d’une imprimante pour un client.</li>
+          <li>Présentation du projet Wisikard à la CAPEB.</li>
+          <li>Gravure de QR Codes Wisikard sur bois.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Compétences Développées</h2>
+        <ul>
+          <li>Programmation web avancée (Laravel, JavaScript, SQL).</li>
+          <li>Gestion de projet et travail en équipe (GitHub, Trello).</li>
+          <li>Optimisation des bases de données et documentation technique.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Conclusion</h2>
+        <p>
+          Ce stage a été une expérience enrichissante qui m’a permis de
+          perfectionner mes compétences techniques et organisationnelles. J’ai
+          beaucoup appris sur le développement d’applications web et la gestion
+          de projets en entreprise.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Téléchargement du Rapport</h2>
+        <a
+          href="chemin/vers/votre-fichier.pdf"
+          download="rapport_stage.pdf"
+          class="btn"
+          >Télécharger le Rapport</a
+        >
+        <h2>Téléchargement du certificat de stage</h2>
+        <a
+          href="/Autre/conventionS2.pdf"
+          download="convention_stage2.pdf"
+          class="btn"
+          >Télécharger le certificat</a
+        >
+      </div>
+    </div>
   </body>
 </html>

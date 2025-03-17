@@ -1,15 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stage de 1er année</title>
+    <title>Portfolio</title>
+    <title>Récapitulatif du Stage</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        text-align: center;
+      }
+      header {
+        background: #333;
+        color: white;
+        padding: 20px;
+        font-size: 24px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        text-align: left;
+        line-height: 1.6;
+      }
+      .project-card {
+        background: #fff;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+      }
+      .project-card img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin-right: 15px;
+      }
+      .project-info {
+        flex: 1;
+      }
+      .tech-icons {
+        margin-top: 5px;
+      }
+      .tech-icons img {
+        width: 36px; /* Augmenter la taille des logos */
+        height: 36px; /* Augmenter la taille des logos */
+        margin-right: 5px;
+      }
+      .btn {
+        display: inline-block;
+        margin: 20px 0;
+        padding: 12px 25px;
+        background: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background 0.3s ease;
+      }
+      .btn:hover {
+        background: #0056b3;
+      }
+      #retour {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+      }
+    </style>
   </head>
   <body>
-    <a href="index.html" class="btn btn-primary">Accueil</a>
-    <h1>Télécharger le Rapport de Stage de 1er Année</h1>
-    <a href="chemin/vers/votre-fichier.pdf" download="rapport1.pdf">
-      Rapport de Stage 1er Année
-    </a>
+    <header>Récapitulatif du Stage de 1ère Année</header>
+    <div class="container">
+      <button id="retour" onclick="location.href='index.html';">Retour</button>
+      <h2>Présentation</h2>
+      <p>
+        Ce stage a été réalisé chez <strong>SENDIX</strong>, une
+        micro-entreprise spécialisée dans le développement web et les services
+        informatiques.
+      </p>
+      <p>
+        Durant mon stage, j'ai eu l'opportunité de travailler sur divers
+        projets, ce qui m'a permis d'acquérir de nouvelles compétences et de
+        renforcer mes connaissances en développement web.
+      </p>
+
+      <h2>Projets Réalisés</h2>
+      <div class="project-card">
+        <img src="https://i.postimg.cc/52LWbPyt/work3.jpg" alt="image" />
+        <div class="project-info">
+          <h3>Refonte du site web de Wisikard</h3>
+          <p>
+            Modernisation de l'interface et amélioration de l'expérience
+            utilisateur.
+          </p>
+          <div class="tech-icons">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEc9A_S6BPxCDRp5WjMFEfXrpCu1ya2OO-Lw&s"
+              alt="HTML"
+            />
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBS-Jftq7EiLZDB75AVtZMxHob-mpwPgM9FQ&s"
+              alt="CSS"
+            />
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/7/73/Javascript-736400_960_720.png"
+              alt="JavaScript"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="image2.jpg" alt="Site de ticketing" />
+        <div class="project-info">
+          <h3>Création d'un site de ticketing</h3>
+          <p>
+            Développement d'un système permettant la gestion et le suivi des
+            tickets de support.
+          </p>
+          <h2>Quizz</h2>
+          <a href="quizz/quizz.html">
+            <img src="/img/ticketing.png" alt="image" />
+          </a>
+          <div class="tech-icons">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEc9A_S6BPxCDRp5WjMFEfXrpCu1ya2OO-Lw&s"
+              alt="HTML"
+            />
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBS-Jftq7EiLZDB75AVtZMxHob-mpwPgM9FQ&s"
+              alt="CSS"
+            />
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/7/73/Javascript-736400_960_720.png"
+              alt="JavaScript"
+            />
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg"
+              alt="PHP"
+            />
+            <img
+              src="https://www.netgen.co.za/wp-content/uploads/2023/05/SQL-Database.png"
+              alt="SQL"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="image3.jpg" alt="Gestion de produits avec QR Code" />
+        <div class="project-info">
+          <h3>Développement d'un site de gestion de produits avec QR Code</h3>
+          <p>
+            Mise en place d'un outil permettant de générer et scanner des QR
+            Codes pour simplifier la gestion des stocks.
+          </p>
+          <div class="tech-icons">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEc9A_S6BPxCDRp5WjMFEfXrpCu1ya2OO-Lw&s"
+              alt="HTML"
+            />
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBS-Jftq7EiLZDB75AVtZMxHob-mpwPgM9FQ&s"
+              alt="CSS"
+            />
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/7/73/Javascript-736400_960_720.png"
+              alt="JavaScript"
+            />
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg"
+              alt="PHP"
+            />
+          </div>
+        </div>
+      </div>
+
+      <h2>Compétences Acquises</h2>
+      <p>Grâce à ce stage, j'ai pu développer plusieurs compétences :</p>
+      <ul>
+        <li>Maîtrise des technologies web (HTML, CSS, JavaScript, PHP, SQL)</li>
+        <li>Gestion de bases de données et intégration d'API</li>
+        <li>Travail en équipe et méthodologie Agile</li>
+        <li>Résolution de problèmes techniques et optimisation du code</li>
+        <li>Déploiement et hébergement de sites web</li>
+      </ul>
+
+      <h2>Téléchargement du Rapport</h2>
+      <a
+        href="chemin/vers/votre-fichier.pdf"
+        download="rapport_stage.pdf"
+        class="btn"
+        >Télécharger le Rapport</a
+      >
+      <h2>Téléchargement du certificat de stage</h2>
+      <a
+        href="/Autre/conventionS1.pdf"
+        download="convention_stage1.pdf"
+        class="btn"
+        >Télécharger le certificat</a
+      >
+    </div>
   </body>
 </html>
