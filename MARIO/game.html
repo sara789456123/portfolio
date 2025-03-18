@@ -360,10 +360,10 @@
           leaderboardData.pop();
         }
         localStorage.setItem("leaderboard", JSON.stringify(leaderboardData));
-        displayLeaderboard();
+        // displayLeaderboard();
       }
 
-      function displayLeaderboard() {
+      /* function displayLeaderboard() {
         const leaderboardData =
           JSON.parse(localStorage.getItem("leaderboard")) || [];
         leaderboardBody.innerHTML = "";
@@ -373,7 +373,7 @@
           leaderboardBody.appendChild(row);
         });
         leaderboard.style.display = "flex";
-      }
+      }*/
 
       submitUsernameButton.addEventListener("click", () => {
         const username = usernameInput.value.trim();

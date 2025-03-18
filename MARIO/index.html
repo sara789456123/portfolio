@@ -120,11 +120,12 @@
       const backgroundSprite = new Image();
       backgroundSprite.src = "./img/blue-sky.avif";
 
+      // Appelez cette fonction dans backgroundSprite.onload
       backgroundSprite.onload = function () {
         ctx.drawImage(backgroundSprite, 0, 0, canvas.width, canvas.height);
         drawButtons();
+        drawPlayButtonRUN();
       };
-
       function drawButtons() {
         drawPlayButton();
 
@@ -164,10 +165,9 @@
           }
         });
       }
-
       function drawPlayButtonRUN() {
         const buttonX = canvas.width / 2 - 100;
-        const buttonY = canvas.height / 2 - 50;
+        const buttonY = canvas.height / 2 + 100; // Positionnez le bouton en dessous des autres
         const buttonWidth = 200;
         const buttonHeight = 50;
 
@@ -177,7 +177,11 @@
         ctx.fillStyle = "hsl(0, 0%, 100%)";
         ctx.font = "20px Arial";
         ctx.textAlign = "center";
-        ctx.fillText("Mode RUN", canvas.width / 2, canvas.height / 2 - 25 + 5);
+        ctx.fillText(
+          "Mode RUN",
+          canvas.width / 2,
+          buttonY + buttonHeight / 2 + 5
+        );
 
         canvas.addEventListener("click", function (event) {
           const rect = canvas.getBoundingClientRect();
@@ -190,7 +194,7 @@
             mouseY >= buttonY &&
             mouseY <= buttonY + buttonHeight
           ) {
-            window.location.href = "run.html";
+            window.location.href = "run.html"; // Assurez-vous que l'URL est correcte
           }
         });
       }
