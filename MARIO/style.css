@@ -2,15 +2,21 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 100vh;
   margin: 0;
-  background-color: #87ceeb;
+  background-color: #5cd653;
 }
-
-canvas {
-  border: 2px solid #000;
+#record {
+  font-size: 24px;
+  font-family: Arial, sans-serif;
+  margin-bottom: 10px;
+  color: black;
 }
-
+#gameCanvas {
+  border: 2px solid black;
+  margin-bottom: 20px;
+}
 #restartButton {
   padding: 17px 40px;
   border-radius: 10px;
@@ -23,15 +29,94 @@ canvas {
   color: hsl(0, 0%, 100%);
   cursor: pointer;
 }
-
 #restartButton:hover {
   box-shadow: rgb(201, 46, 70) 0px 7px 0px 0px;
 }
-
 #restartButton:active {
   background-color: rgb(255, 56, 86);
-  /*50, 168, 80*/
   box-shadow: rgb(201, 46, 70) 0px 0px 0px 0px;
   transform: translateY(5px);
   transition: 200ms;
+}
+#btnRetour {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  background-color: #ecf0f3;
+  box-shadow: #dde9f2;
+  padding: 17px 40px;
+  border-radius: 10px;
+  border: 0;
+}
+#btnRetour:hover {
+  box-shadow: rgb(195, 200, 229) 0px 7px 0px 0px;
+}
+#btnHome {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background-color: #ecf0f3;
+  box-shadow: #dde9f2;
+  padding: 17px 40px;
+  border-radius: 10px;
+  border: 0;
+}
+#btnHome:hover {
+  box-shadow: rgb(195, 200, 229) 0px 7px 0px 0px;
+}
+#leaderboard {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+#leaderboard h2 {
+  margin-top: 20px;
+}
+#leaderboard table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 10px;
+}
+#leaderboard th,
+#leaderboard td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+#leaderboard th {
+  background-color: #f2f2f2;
+}
+#usernameModal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+#usernameModal input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+#usernameModal button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(255, 56, 86);
+  color: white;
+  cursor: pointer;
+}
+#usernameModal button:hover {
+  background-color: rgb(201, 46, 70);
+}
+#leaderboard {
+  display: none;
 }

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="game.js" />
+    <title>Cat Game</title>
+  </head>
+  <body>
+    <button id="btnRetour" onclick="location.href='../index.html';">
+      Retour
+    </button>
+    <button id="btnHome" onclick="location.href='index.html';">Accueil</button>
+
+    <div id="record">Record: 0</div>
+    <div id="bonusCount">Argent: 0</div>
+    <canvas id="gameCanvas" width="1000" height="500"></canvas>
+    <button id="restartButton">Restart</button>
+    <div id="leaderboard">
+      <h2>Leaderboard</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <!-- Leaderboard rows will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+    <div id="usernameModal">
+      <h2>Entrer votre pseudo:</h2>
+      <input type="text" id="usernameInput" placeholder="Your name" />
+      <button id="submitUsernameButton">Envoyer</button>
+    </div>
+    <img id="platformSprite" src="./img/plateforme.png" style="display: none" />
+    <img id="catSpriteRight" src="./img/catdroite.png" style="display: none" />
+    <img id="catSpriteLeft" src="./img/catgauche.png" style="display: none" />
+    <img id="bonusSprite" src="./img/bonus.png" style="display: none" />
+    <script>
+      const canvas = document.getElementById("gameCanvas");
+      const ctx = canvas.getContext("2d");
+      const restartButton = document.getElementById("restartButton");
+      const recordElement = document.getElementById("record");
+      const bonusCountElement = document.getElementById("bonusCount");
+      const leaderboard = document.getElementById("leaderboard");
+      const leaderboardBody = document.getElementById("leaderboardBody");
+      const usernameModal = document.getElementById("usernameModal");
+      const usernameInput = document.getElementById("usernameInput");
+      const submitUsernameButton = document.getElementById(
+        "submitUsernameButton"
+      );
+
+      const platformSprite = new Image();
+      platformSprite.src = "./img/plateforme.png";
+
+      const catSpriteRight = new Image();
+      catSpriteRight.src = "./img/catdroite.png";
+
+      const catSpriteLeft = new Image();
+      catSpriteLeft.src = "./img/catgauche.png";
+
+      const bonusSprite = new Image();
+      bonusSprite.src = "./img/bonus.png";
+
+      const backgroundSprite = new Image();
+      backgroundSprite.src = "./img/blue-sky.avif";
+
+      const cat = {
+        x: 0,
+        y: 0,
+        width: 50,
+        height: 50,
+        dx: 0,
+        dy: 0,
+        speed: 3,
+        jumpSpeed: 3,
+        jumpStrength: -15,
+        isJumping: false,
+        direction: "right",
+      };
+
+      let platforms = [];
+      let bonuses = [];
+      let gameOver = false;
+      let cameraX = 0;
+      let score = 0;
+      let record = 0;
+      let bonusCount = 0;
+      let hasLostOnce = false;
+      const platformSpacing = 200;
+      const gravity = 0.7;
+      const minPlatformHeight = 190;
+      const maxPlatformHeight = 300;
+      const platformWidth = 110;
+      const platformHeight = 20;
+
+      function loadGameState() {
+        const savedRecord = localStorage.getItem("record");
+        const savedBonusCount = localStorage.getItem("bonusCount");
+        if (savedRecord !== null) {
+          record = parseInt(savedRecord, 10);
+          recordElement.textContent = `Record: ${record}`;
+        }
+        if (savedBonusCount !== null) {
+          bonusCount = parseInt(savedBonusCount, 10);
+          bonusCountElement.textContent = `Carotte: ${bonusCount}`;
+        }
+      }
+
+      function saveGameState() {
+        localStorage.setItem("record", record);
+        localStorage.setItem("bonusCount", bonusCount);
+      }
+
+      function drawCat() {
+        const catSprite =
+          cat.direction === "left" ? catSpriteLeft : catSpriteRight;
+        ctx.drawImage(catSprite, cat.x - cameraX, cat.y, cat.width, cat.height);
+      }
+
+      function drawPlatforms() {
+        platforms.forEach((platform) => {
+          ctx.drawImage(
+            platformSprite,
+            platform.x - cameraX,
+            platform.y,
+            platform.width,
+            platform.height
+          );
+        });
+      }
+
+      function drawBonuses() {
+        bonuses.forEach((bonus) => {
+          ctx.drawImage(
+            bonusSprite,
+            bonus.x - cameraX,
+            bonus.y,
+            bonus.width,
+            bonus.height
+          );
+        });
+      }
+
+      function drawScore() {
+        ctx.fillStyle = "black";
+        ctx.font = "24px Arial";
+        ctx.fillText(`Score: ${score}`, 10, 30);
+      }
+
+      function drawBonusCount() {
+        ctx.fillStyle = "black";
+        ctx.font = "24px Arial";
+        ctx.fillText(`Carotte: ${bonusCount}`, 10, 60);
+      }
+
+      function update() {
+        if (gameOver) return;
+
+        const prevX = cat.x;
+        const prevY = cat.y;
+
+        cat.y += cat.dy;
+        cat.x += cat.dx;
+
+        score += cat.dx;
+
+        if (score > record) {
+          record = score;
+          recordElement.textContent = `Record: ${record}`;
+          saveGameState();
+        }
+
+        cat.isJumping = true;
+        let onPlatform = false;
+
+        platforms.forEach((platform) => {
+          if (
+            cat.x < platform.x + platform.width &&
+            cat.x + cat.width > platform.x &&
+            cat.y < platform.y + platform.height &&
+            cat.y + cat.height >= platform.y &&
+            cat.dy >= 0
+          ) {
+            cat.y = platform.y - cat.height;
+            cat.dy = 0;
+            cat.isJumping = false;
+            onPlatform = true;
+          }
+
+          // Check for horizontal collision
+          if (
+            cat.x < platform.x + platform.width &&
+            cat.x + cat.width > platform.x &&
+            cat.y < platform.y + platform.height &&
+            cat.y + cat.height > platform.y
+          ) {
+            if (cat.dx > 0 && prevX + cat.width <= platform.x) {
+              cat.x = platform.x - cat.width;
+            } else if (cat.dx < 0 && prevX >= platform.x + platform.width) {
+              cat.x = platform.x + platform.width;
+            }
+          }
+        });
+
+        // Check for bonus collision
+        for (let i = bonuses.length - 1; i >= 0; i--) {
+          const bonus = bonuses[i];
+          if (
+            cat.x < bonus.x + bonus.width &&
+            cat.x + cat.width > bonus.x &&
+            cat.y < bonus.y + bonus.height &&
+            cat.y + cat.height > bonus.y
+          ) {
+            // Remove the bonus and add to bonus count
+            bonuses.splice(i, 1);
+            bonusCount += 1;
+            bonusCountElement.textContent = `Bonus: ${bonusCount}`;
+            saveGameState();
+          }
+        }
+
+        if (!onPlatform) {
+          cat.isJumping = true;
+        }
+
+        if (cat.y + cat.height > canvas.height) {
+          gameOver = true;
+          hasLostOnce = true;
+          showUsernameModal();
+        } else {
+          cat.dy += gravity;
+        }
+
+        if (cat.x + cat.width > canvas.width / 2) {
+          cameraX = cat.x - canvas.width / 2;
+        }
+
+        generatePlatforms();
+      }
+
+      function generatePlatforms() {
+        const lastPlatform = platforms[platforms.length - 1];
+        if (
+          !lastPlatform ||
+          lastPlatform.x < canvas.width + cameraX + platformSpacing
+        ) {
+          const platformX = lastPlatform ? lastPlatform.x + platformSpacing : 0;
+          const platformY = Math.floor(
+            Math.random() * (maxPlatformHeight - minPlatformHeight) +
+              minPlatformHeight
+          );
+
+          platforms.push({
+            x: platformX,
+            y: platformY,
+            width: platformWidth,
+            height: platformHeight,
+          });
+
+          // Ajouter un bonus aléatoirement sur certaines plateformes
+          if (Math.random() < 0.2) {
+            // 20% de chance d'ajouter un bonus
+            bonuses.push({
+              x: platformX + platformWidth / 2 - 15, // Position centrée sur la plateforme
+              y: platformY - 30, // Position au-dessus de la plateforme
+              width: 30,
+              height: 30,
+            });
+          }
+
+          if (platforms.length === 1) {
+            cat.x = platformX;
+            cat.y = platformY - cat.height;
+            cat.dy = 0;
+          }
+        }
+      }
+
+      function gameLoop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "skyblue";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(backgroundSprite, 0, 0, canvas.width, canvas.height);
+
+        drawPlatforms();
+        drawCat();
+        drawBonuses();
+        drawScore();
+
+        if (gameOver) {
+          ctx.fillStyle = "black";
+          ctx.font = "48px Arial";
+          ctx.fillText("Perdu", canvas.width / 2 - 50, canvas.height / 2);
+        } else {
+          update();
+          requestAnimationFrame(gameLoop);
+        }
+      }
+
+      function restartGame() {
+        platforms = [];
+        generatePlatforms();
+        cat.dx = 0;
+        cat.dy = 0;
+        cat.isJumping = false;
+        cat.direction = "right";
+        cat.speed = 3;
+        gameOver = false;
+        cameraX = 0;
+        score = 0;
+        loadGameState();
+        gameLoop();
+      }
+
+      function startGame() {
+        if (
+          catSpriteRight.complete &&
+          catSpriteLeft.complete &&
+          platformSprite.complete &&
+          bonusSprite.complete &&
+          backgroundSprite
+        ) {
+          loadGameState();
+          restartGame();
+        } else {
+          catSpriteRight.onload = restartGame;
+          catSpriteLeft.onload = restartGame;
+          platformSprite.onload = restartGame;
+          bonusSprite.onload = restartGame;
+          backgroundSprite.onload = restartGame;
+        }
+      }
+
+      function showUsernameModal() {
+        usernameModal.style.display = "block";
+      }
+
+      function hideUsernameModal() {
+        usernameModal.style.display = "none";
+      }
+
+      function saveScore(username) {
+        const leaderboardData =
+          JSON.parse(localStorage.getItem("leaderboard")) || [];
+        leaderboardData.push({ name: username, score: score });
+        leaderboardData.sort((a, b) => b.score - a.score);
+        if (leaderboardData.length > 10) {
+          leaderboardData.pop();
+        }
+        localStorage.setItem("leaderboard", JSON.stringify(leaderboardData));
+        displayLeaderboard();
+      }
+
+      function displayLeaderboard() {
+        const leaderboardData =
+          JSON.parse(localStorage.getItem("leaderboard")) || [];
+        leaderboardBody.innerHTML = "";
+        leaderboardData.forEach((entry) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `<td>${entry.name}</td><td>${entry.score}</td>`;
+          leaderboardBody.appendChild(row);
+        });
+        leaderboard.style.display = "flex";
+      }
+
+      submitUsernameButton.addEventListener("click", () => {
+        const username = usernameInput.value.trim();
+        if (username) {
+          saveScore(username);
+          hideUsernameModal();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (gameOver) return;
+
+        switch (event.key) {
+          case "ArrowUp":
+            if (!cat.isJumping) {
+              cat.dy = cat.jumpStrength;
+            }
+            break;
+          case "ArrowLeft":
+            cat.dx = -cat.speed;
+            cat.direction = "left"; // Update direction
+            break;
+          case "ArrowRight":
+            cat.dx = cat.speed;
+            cat.direction = "right"; // Update direction
+            break;
+        }
+      });
+
+      document.addEventListener("keyup", (event) => {
+        switch (event.key) {
+          case "ArrowLeft":
+          case "ArrowRight":
+            cat.dx = 0;
+            break;
+        }
+      });
+
+      restartButton.addEventListener("click", restartGame);
+
+      startGame();
+    </script>
+  </body>
+</html>

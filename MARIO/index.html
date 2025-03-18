@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cat Game</title>
+    <title>Accueil</title>
     <style>
       body {
         display: flex;
@@ -12,43 +12,16 @@
         justify-content: center;
         height: 100vh;
         margin: 0;
-        background-color: #87ceeb;
+        background-color: #5cd653;
       }
-      #record {
-        font-size: 24px;
-        font-family: Arial, sans-serif;
-        margin-bottom: 10px;
-        color: black;
-      }
-      #gameCanvas {
+      #welcomeCanvas {
         border: 2px solid black;
         margin-bottom: 20px;
-      }
-      #restartButton {
-        padding: 17px 40px;
-        border-radius: 10px;
-        border: 0;
-        background-color: rgb(255, 56, 86);
-        letter-spacing: 1.5px;
-        font-size: 15px;
-        transition: all 0.3s ease;
-        box-shadow: rgb(201, 46, 70) 0px 10px 0px 0px;
-        color: hsl(0, 0%, 100%);
-        cursor: pointer;
-      }
-      #restartButton:hover {
-        box-shadow: rgb(201, 46, 70) 0px 7px 0px 0px;
-      }
-      #restartButton:active {
-        background-color: rgb(255, 56, 86);
-        box-shadow: rgb(201, 46, 70) 0px 0px 0px 0px;
-        transform: translateY(5px);
-        transition: 200ms;
       }
       #btnRetour {
         position: absolute;
         left: 20px;
-        top: 0px;
+        top: 20px;
         background-color: #ecf0f3;
         box-shadow: #dde9f2;
         padding: 17px 40px;
@@ -58,314 +31,221 @@
       #btnRetour:hover {
         box-shadow: rgb(195, 200, 229) 0px 7px 0px 0px;
       }
+      #btnHome {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        background-color: #ecf0f3;
+        box-shadow: #dde9f2;
+        padding: 17px 40px;
+        border-radius: 10px;
+        border: 0;
+      }
+      #btnHome:hover {
+        box-shadow: rgb(195, 200, 229) 0px 7px 0px 0px;
+      }
+      #leaderboard {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      #leaderboard h2 {
+        margin-top: 0;
+      }
+      #leaderboard table {
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 400px;
+        margin-top: 10px;
+      }
+      #leaderboard th,
+      #leaderboard td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      #leaderboard th {
+        background-color: #f2f2f2;
+      }
+      #closeButton {
+        margin-top: 10px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: rgb(255, 56, 86);
+        color: white;
+        cursor: pointer;
+      }
+      #closeButton:hover {
+        background-color: rgb(201, 46, 70);
+      }
     </style>
   </head>
   <body>
     <button id="btnRetour" onclick="location.href='../index.html';">
-      Retour</button
-    ><br />
-    <div id="record">Record: 0</div>
-    <div id="bonusCount">Carotte: 0</div>
-    <canvas id="gameCanvas" width="800" height="400"></canvas>
-    <button id="restartButton">Restart</button>
-    <img id="platformSprite" src="./img/plateforme.png" style="display: none" />
-    <img id="catSpriteRight" src="./img/catdroite.png" style="display: none" />
-    <img id="catSpriteLeft" src="./img/catgauche.png" style="display: none" />
-    <img id="bonusSprite" src="./img/bonus.png" style="display: none" />
+      Retour
+    </button>
+    <canvas id="welcomeCanvas" width="800" height="400"></canvas>
+    <div id="leaderboard">
+      <h2>Leaderboard</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <!-- Leaderboard rows will be inserted here -->
+        </tbody>
+      </table>
+      <button id="closeButton">Close</button>
+    </div>
 
     <script>
-      const canvas = document.getElementById("gameCanvas");
+      const canvas = document.getElementById("welcomeCanvas");
       const ctx = canvas.getContext("2d");
-      const restartButton = document.getElementById("restartButton");
-      const recordElement = document.getElementById("record");
-      const bonusCountElement = document.getElementById("bonusCount");
+      const leaderboard = document.getElementById("leaderboard");
+      const leaderboardBody = document.getElementById("leaderboardBody");
+      const closeButton = document.getElementById("closeButton");
 
-      const platformSprite = new Image();
-      platformSprite.src = "./img/plateforme.png";
+      const backgroundSprite = new Image();
+      backgroundSprite.src = "./img/blue-sky.avif";
 
-      const catSpriteRight = new Image();
-      catSpriteRight.src = "./img/catdroite.png";
-
-      const catSpriteLeft = new Image();
-      catSpriteLeft.src = "./img/catgauche.png";
-
-      const bonusSprite = new Image();
-      bonusSprite.src = "./img/bonus.png";
-
-      const cat = {
-        x: 0,
-        y: 0,
-        width: 50,
-        height: 50,
-        dx: 0,
-        dy: 0,
-        speed: 3,
-        jumpSpeed: 5,
-        jumpStrength: -15,
-        isJumping: false,
-        direction: "right",
+      backgroundSprite.onload = function () {
+        ctx.drawImage(backgroundSprite, 0, 0, canvas.width, canvas.height);
+        drawButtons();
       };
 
-      let platforms = [];
-      let bonuses = [];
-      let gameOver = false;
-      let cameraX = 0;
-      let score = 0;
-      let record = 0;
-      let bonusCount = 0;
-      let hasLostOnce = false;
-      const platformSpacing = 200;
-      const gravity = 0.7;
-      const minPlatformHeight = 180;
-      const maxPlatformHeight = 300;
-      const platformWidth = 100;
-      const platformHeight = 20;
+      function drawButtons() {
+        drawPlayButton();
 
-      function drawCat() {
-        const catSprite =
-          cat.direction === "left" ? catSpriteLeft : catSpriteRight;
-        ctx.drawImage(catSprite, cat.x - cameraX, cat.y, cat.width, cat.height);
+        drawRecordButton();
       }
 
-      function drawPlatforms() {
-        platforms.forEach((platform) => {
-          ctx.drawImage(
-            platformSprite,
-            platform.x - cameraX,
-            platform.y,
-            platform.width,
-            platform.height
-          );
+      function drawPlayButton() {
+        const buttonX = canvas.width / 2 - 100;
+        const buttonY = canvas.height / 2 - 50;
+        const buttonWidth = 200;
+        const buttonHeight = 50;
+
+        ctx.fillStyle = "rgb(51, 195, 255)";
+        ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+
+        ctx.fillStyle = "hsl(0, 0%, 100%)";
+        ctx.font = "20px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(
+          "Mode Tranquille",
+          canvas.width / 2,
+          canvas.height / 2 - 25 + 5
+        );
+
+        canvas.addEventListener("click", function (event) {
+          const rect = canvas.getBoundingClientRect();
+          const mouseX = event.clientX - rect.left;
+          const mouseY = event.clientY - rect.top;
+
+          if (
+            mouseX >= buttonX &&
+            mouseX <= buttonX + buttonWidth &&
+            mouseY >= buttonY &&
+            mouseY <= buttonY + buttonHeight
+          ) {
+            window.location.href = "game.html";
+          }
         });
       }
 
-      function drawBonuses() {
-        bonuses.forEach((bonus) => {
-          ctx.drawImage(
-            bonusSprite,
-            bonus.x - cameraX,
-            bonus.y,
-            bonus.width,
-            bonus.height
-          );
+      function drawPlayButtonRUN() {
+        const buttonX = canvas.width / 2 - 100;
+        const buttonY = canvas.height / 2 - 50;
+        const buttonWidth = 200;
+        const buttonHeight = 50;
+
+        ctx.fillStyle = "rgb(51, 195, 255)";
+        ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+
+        ctx.fillStyle = "hsl(0, 0%, 100%)";
+        ctx.font = "20px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("Mode RUN", canvas.width / 2, canvas.height / 2 - 25 + 5);
+
+        canvas.addEventListener("click", function (event) {
+          const rect = canvas.getBoundingClientRect();
+          const mouseX = event.clientX - rect.left;
+          const mouseY = event.clientY - rect.top;
+
+          if (
+            mouseX >= buttonX &&
+            mouseX <= buttonX + buttonWidth &&
+            mouseY >= buttonY &&
+            mouseY <= buttonY + buttonHeight
+          ) {
+            window.location.href = "run.html";
+          }
         });
       }
 
-      function drawScore() {
-        ctx.fillStyle = "black";
-        ctx.font = "24px Arial";
-        ctx.fillText(`Score: ${score}`, 10, 30);
-      }
+      function drawRecordButton() {
+        const buttonX = canvas.width / 2 - 100;
+        const buttonY = canvas.height / 2 + 25;
+        const buttonWidth = 200;
+        const buttonHeight = 50;
 
-      /*   function drawBonusCount() {
-        ctx.fillStyle = "black";
-        ctx.font = "24px Arial";
-        ctx.fillText(`Carotte: ${bonusCount}`, 10, 60);
-      }*/
+        ctx.fillStyle = "rgb(255, 56, 86)";
+        ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
 
-      function update() {
-        if (gameOver) return;
+        ctx.fillStyle = "hsl(0, 0%, 100%)";
+        ctx.font = "20px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("Records", canvas.width / 2, canvas.height / 2 + 50 + 5);
 
-        const prevX = cat.x;
-        const prevY = cat.y;
+        canvas.addEventListener("click", function (event) {
+          const rect = canvas.getBoundingClientRect();
+          const mouseX = event.clientX - rect.left;
+          const mouseY = event.clientY - rect.top;
 
-        cat.y += cat.dy;
-        cat.x += cat.dx;
-
-        score += cat.dx;
-
-        if (score > record) {
-          record = score;
-          recordElement.textContent = `Record: ${record}`;
-        }
-
-        cat.isJumping = true;
-        let onPlatform = false;
-
-        platforms.forEach((platform) => {
           if (
-            cat.x < platform.x + platform.width &&
-            cat.x + cat.width > platform.x &&
-            cat.y < platform.y + platform.height &&
-            cat.y + cat.height >= platform.y &&
-            cat.dy >= 0
+            mouseX >= buttonX &&
+            mouseX <= buttonX + buttonWidth &&
+            mouseY >= buttonY &&
+            mouseY <= buttonY + buttonHeight
           ) {
-            cat.y = platform.y - cat.height;
-            cat.dy = 0;
-            cat.isJumping = false;
-            onPlatform = true;
-          }
-
-          // Check for horizontal collision
-          if (
-            cat.x < platform.x + platform.width &&
-            cat.x + cat.width > platform.x &&
-            cat.y < platform.y + platform.height &&
-            cat.y + cat.height > platform.y
-          ) {
-            if (cat.dx > 0 && prevX + cat.width <= platform.x) {
-              cat.x = platform.x - cat.width;
-            } else if (cat.dx < 0 && prevX >= platform.x + platform.width) {
-              cat.x = platform.x + platform.width;
-            }
+            showLeaderboard();
           }
         });
-
-        // Check for bonus collision
-        for (let i = bonuses.length - 1; i >= 0; i--) {
-          const bonus = bonuses[i];
-          if (
-            cat.x < bonus.x + bonus.width &&
-            cat.x + cat.width > bonus.x &&
-            cat.y < bonus.y + bonus.height &&
-            cat.y + cat.height > bonus.y
-          ) {
-            // Remove the bonus and add to bonus count
-            bonuses.splice(i, 1);
-            bonusCount += 1;
-            bonusCountElement.textContent = `Bonus: ${bonusCount}`;
-          }
-        }
-
-        if (!onPlatform) {
-          cat.isJumping = true;
-        }
-
-        if (cat.y + cat.height > canvas.height) {
-          gameOver = true;
-          hasLostOnce = true;
-        } else {
-          cat.dy += gravity;
-        }
-
-        if (cat.x + cat.width > canvas.width / 2) {
-          cameraX = cat.x - canvas.width / 2;
-        }
-
-        generatePlatforms();
       }
 
-      function generatePlatforms() {
-        const lastPlatform = platforms[platforms.length - 1];
-        if (
-          !lastPlatform ||
-          lastPlatform.x < canvas.width + cameraX + platformSpacing
-        ) {
-          const platformX = lastPlatform ? lastPlatform.x + platformSpacing : 0;
-          const platformY = Math.floor(
-            Math.random() * (maxPlatformHeight - minPlatformHeight) +
-              minPlatformHeight
-          );
-
-          platforms.push({
-            x: platformX,
-            y: platformY,
-            width: platformWidth,
-            height: platformHeight,
-          });
-
-          // Ajouter un bonus aléatoirement sur certaines plateformes
-          if (Math.random() < 0.2) {
-            // 20% de chance d'ajouter un bonus
-            bonuses.push({
-              x: platformX + platformWidth / 2 - 15, // Position centrée sur la plateforme
-              y: platformY - 30, // Position au-dessus de la plateforme
-              width: 30,
-              height: 30,
-            });
-          }
-
-          if (platforms.length === 1) {
-            cat.x = platformX;
-            cat.y = platformY - cat.height;
-            cat.dy = 0;
-          }
-        }
+      function showLeaderboard() {
+        leaderboard.style.display = "flex";
+        displayLeaderboard();
       }
 
-      function gameLoop() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = "skyblue";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        drawPlatforms();
-        drawCat();
-        drawBonuses();
-        drawScore();
-        drawBonusCount();
-
-        if (gameOver) {
-          ctx.fillStyle = "black";
-          ctx.font = "48px Arial";
-          ctx.fillText("Perdu", canvas.width / 2 - 50, canvas.height / 2);
-        } else {
-          update();
-          requestAnimationFrame(gameLoop);
-        }
+      function hideLeaderboard() {
+        leaderboard.style.display = "none";
       }
 
-      function restartGame() {
-        platforms = [];
-        generatePlatforms();
-        cat.dx = 0;
-        cat.dy = 0;
-        cat.isJumping = false;
-        cat.direction = "right"; // Reset direction
-        gameOver = false;
-        cameraX = 0;
-        score = 0;
-        gameLoop();
+      function displayLeaderboard() {
+        const leaderboardData =
+          JSON.parse(localStorage.getItem("leaderboard")) || [];
+        leaderboardBody.innerHTML = "";
+        leaderboardData.forEach((entry) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `<td>${entry.name}</td><td>${entry.score}</td>`;
+          leaderboardBody.appendChild(row);
+        });
       }
 
-      function startGame() {
-        if (
-          catSpriteRight.complete &&
-          catSpriteLeft.complete &&
-          platformSprite.complete &&
-          bonusSprite.complete
-        ) {
-          restartGame();
-        } else {
-          catSpriteRight.onload = restartGame;
-          catSpriteLeft.onload = restartGame;
-          platformSprite.onload = restartGame;
-          bonusSprite.onload = restartGame;
-        }
-      }
-
-      document.addEventListener("keydown", (event) => {
-        if (gameOver) return;
-
-        switch (event.key) {
-          case "ArrowUp":
-            if (!cat.isJumping) {
-              cat.dy = cat.jumpStrength;
-            }
-            break;
-          case "ArrowLeft":
-            cat.dx = -cat.speed;
-            cat.direction = "left"; // Update direction
-            break;
-          case "ArrowRight":
-            cat.dx = cat.speed;
-            cat.direction = "right"; // Update direction
-            break;
-        }
-      });
-
-      document.addEventListener("keyup", (event) => {
-        switch (event.key) {
-          case "ArrowLeft":
-          case "ArrowRight":
-            cat.dx = 0;
-            break;
-        }
-      });
-
-      restartButton.addEventListener("click", restartGame);
-
-      startGame();
+      closeButton.addEventListener("click", hideLeaderboard);
     </script>
   </body>
 </html>
