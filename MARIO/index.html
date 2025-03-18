@@ -65,50 +65,65 @@
       Retour</button
     ><br />
     <div id="record">Record: 0</div>
+    <div id="bonusCount">Carotte: 0</div>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     <button id="restartButton">Restart</button>
     <img id="platformSprite" src="./img/plateforme.png" style="display: none" />
-    <img id="catSprite" src="./img/catdroite.png" style="display: none" />
+    <img id="catSpriteRight" src="./img/catdroite.png" style="display: none" />
+    <img id="catSpriteLeft" src="./img/catgauche.png" style="display: none" />
+    <img id="bonusSprite" src="./img/bonus.png" style="display: none" />
 
     <script>
       const canvas = document.getElementById("gameCanvas");
       const ctx = canvas.getContext("2d");
       const restartButton = document.getElementById("restartButton");
       const recordElement = document.getElementById("record");
+      const bonusCountElement = document.getElementById("bonusCount");
 
       const platformSprite = new Image();
       platformSprite.src = "./img/plateforme.png";
 
-      const catSprite = new Image();
-      catSprite.src = "./img/catdroite.png";
+      const catSpriteRight = new Image();
+      catSpriteRight.src = "./img/catdroite.png";
+
+      const catSpriteLeft = new Image();
+      catSpriteLeft.src = "./img/catgauche.png";
+
+      const bonusSprite = new Image();
+      bonusSprite.src = "./img/bonus.png";
 
       const cat = {
         x: 0,
         y: 0,
-        width: 50, // Largeur de votre sprite
-        height: 50, // Hauteur de votre sprite
+        width: 50,
+        height: 50,
         dx: 0,
         dy: 0,
         speed: 3,
         jumpSpeed: 5,
         jumpStrength: -15,
         isJumping: false,
+        direction: "right",
       };
 
       let platforms = [];
+      let bonuses = [];
       let gameOver = false;
       let cameraX = 0;
       let score = 0;
       let record = 0;
+      let bonusCount = 0;
       let hasLostOnce = false;
       const platformSpacing = 200;
       const gravity = 0.7;
       const minPlatformHeight = 180;
       const maxPlatformHeight = 300;
       const platformWidth = 100;
-      const platformHeight = 30;
+      const platformHeight = 20;
 
       function drawCat() {
+        const catSprite =
+          cat.direction === "left" ? catSpriteLeft : catSpriteRight;
         ctx.drawImage(catSprite, cat.x - cameraX, cat.y, cat.width, cat.height);
       }
 
@@ -124,11 +139,29 @@
         });
       }
 
+      function drawBonuses() {
+        bonuses.forEach((bonus) => {
+          ctx.drawImage(
+            bonusSprite,
+            bonus.x - cameraX,
+            bonus.y,
+            bonus.width,
+            bonus.height
+          );
+        });
+      }
+
       function drawScore() {
         ctx.fillStyle = "black";
         ctx.font = "24px Arial";
         ctx.fillText(`Score: ${score}`, 10, 30);
       }
+
+      /*   function drawBonusCount() {
+        ctx.fillStyle = "black";
+        ctx.font = "24px Arial";
+        ctx.fillText(`Carotte: ${bonusCount}`, 10, 60);
+      }*/
 
       function update() {
         if (gameOver) return;
@@ -163,6 +196,7 @@
             onPlatform = true;
           }
 
+          // Check for horizontal collision
           if (
             cat.x < platform.x + platform.width &&
             cat.x + cat.width > platform.x &&
@@ -176,6 +210,22 @@
             }
           }
         });
+
+        // Check for bonus collision
+        for (let i = bonuses.length - 1; i >= 0; i--) {
+          const bonus = bonuses[i];
+          if (
+            cat.x < bonus.x + bonus.width &&
+            cat.x + cat.width > bonus.x &&
+            cat.y < bonus.y + bonus.height &&
+            cat.y + cat.height > bonus.y
+          ) {
+            // Remove the bonus and add to bonus count
+            bonuses.splice(i, 1);
+            bonusCount += 1;
+            bonusCountElement.textContent = `Bonus: ${bonusCount}`;
+          }
+        }
 
         if (!onPlatform) {
           cat.isJumping = true;
@@ -214,6 +264,17 @@
             height: platformHeight,
           });
 
+          // Ajouter un bonus aléatoirement sur certaines plateformes
+          if (Math.random() < 0.2) {
+            // 20% de chance d'ajouter un bonus
+            bonuses.push({
+              x: platformX + platformWidth / 2 - 15, // Position centrée sur la plateforme
+              y: platformY - 30, // Position au-dessus de la plateforme
+              width: 30,
+              height: 30,
+            });
+          }
+
           if (platforms.length === 1) {
             cat.x = platformX;
             cat.y = platformY - cat.height;
@@ -230,7 +291,9 @@
 
         drawPlatforms();
         drawCat();
+        drawBonuses();
         drawScore();
+        drawBonusCount();
 
         if (gameOver) {
           ctx.fillStyle = "black";
@@ -248,11 +311,27 @@
         cat.dx = 0;
         cat.dy = 0;
         cat.isJumping = false;
+        cat.direction = "right"; // Reset direction
         gameOver = false;
         cameraX = 0;
         score = 0;
-
         gameLoop();
+      }
+
+      function startGame() {
+        if (
+          catSpriteRight.complete &&
+          catSpriteLeft.complete &&
+          platformSprite.complete &&
+          bonusSprite.complete
+        ) {
+          restartGame();
+        } else {
+          catSpriteRight.onload = restartGame;
+          catSpriteLeft.onload = restartGame;
+          platformSprite.onload = restartGame;
+          bonusSprite.onload = restartGame;
+        }
       }
 
       document.addEventListener("keydown", (event) => {
@@ -266,9 +345,11 @@
             break;
           case "ArrowLeft":
             cat.dx = -cat.speed;
+            cat.direction = "left"; // Update direction
             break;
           case "ArrowRight":
             cat.dx = cat.speed;
+            cat.direction = "right"; // Update direction
             break;
         }
       });
@@ -284,8 +365,7 @@
 
       restartButton.addEventListener("click", restartGame);
 
-      generatePlatforms();
-      gameLoop();
+      startGame();
     </script>
   </body>
 </html>
