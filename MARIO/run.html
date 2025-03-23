@@ -5,17 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <title>Auto Cat Game</title>
+    <style>
+      #leaderboard {
+        display: none;
+      }
+      canvas {
+        display: block;
+        background: #87ceeb;
+      }
+    </style>
   </head>
-  <style>
-    #leaderboard {
-      display: none;
-    }
-  </style>
   <body>
     <button id="btnRetour" onclick="location.href='../index.html';">
       Retour
     </button>
-    <button id="btnHome" onclick="location.href='index.html';">Accueil</button>
 
     <div id="record">Record: 0</div>
     <div id="bonusCount">Argent: 0</div>
@@ -44,7 +47,14 @@
     <img id="catSpriteRight" src="./img/catdroite.png" style="display: none" />
     <img id="catSpriteLeft" src="./img/catgauche.png" style="display: none" />
     <img id="bonusSprite" src="./img/bonus.png" style="display: none" />
+    <img
+      id="speedBonusSprite"
+      src="./img/speed_bonus.png"
+      style="display: none"
+    />
     <img id="lune" src="./img/lune.webp" style="display: none" />
+    <img id="shopSprite" src="./img/shop.png" style="display: none" />
+    <img id="AccueilSprite" src="./img/maison.png" style="display: none" />
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const canvas = document.getElementById("gameCanvas");
@@ -72,11 +82,20 @@
         const bonusSprite = new Image();
         bonusSprite.src = "./img/bonus.png";
 
+        const speedBonusSprite = new Image();
+        speedBonusSprite.src = "./img/speed_bonus.png";
+
         const backgroundSprite = new Image();
         backgroundSprite.src = "./img/ciel-sombre.jpg";
 
         const luneImg = new Image();
         luneImg.src = "./img/lune.webp";
+
+        const shopSprite = new Image();
+        shopSprite.src = "./img/shop.png";
+
+        const AccueilSprite = new Image();
+        AccueilSprite.src = "./img/maison.png";
 
         const cat = {
           x: 0,
@@ -94,19 +113,20 @@
 
         let platforms = [];
         let bonuses = [];
+        let speedBonuses = [];
         let gameOver = false;
         let cameraX = 0;
         let score = 0;
         let record = 0;
         let bonusCount = 0;
         let hasLostOnce = false;
-        const platformSpacing = 300;
+        const platformSpacing = 230;
         const gravity = 0.7;
-        const minPlatformHeight = 150;
-        const maxPlatformHeight = 350;
-        const platformWidth = 150;
+        let minPlatformHeight = 130;
+        let maxPlatformHeight = 350;
+        let platformWidth = 150;
         const platformHeight = 20;
-        const cameraSpeed = 0.5; // Vitesse initiale de la caméra
+        let cameraSpeed = 1.5; // Vitesse initiale de la caméra
 
         function loadGameState() {
           const savedRecord = localStorage.getItem("record");
@@ -160,10 +180,27 @@
               bonus.height
             );
           });
+
+          speedBonuses.forEach((bonus) => {
+            ctx.drawImage(
+              speedBonusSprite,
+              bonus.x - cameraX,
+              bonus.y,
+              bonus.width,
+              bonus.height
+            );
+          });
         }
 
         function drawLune() {
           ctx.drawImage(luneImg, 50, 50, 100, 100); // Dessine la lune à une position fixe
+        }
+
+        function drawShopButton() {
+          ctx.drawImage(shopSprite, canvas.width - 60, 10, 50, 50); // Dessine le bouton shop à une position fixe
+        }
+        function drawAccueilButton() {
+          ctx.drawImage(AccueilSprite, canvas.width - 120, 10, 50, 50); // Dessine le bouton shop à une position fixe
         }
 
         function drawScore() {
@@ -241,6 +278,19 @@
             }
           }
 
+          for (let i = speedBonuses.length - 1; i >= 0; i--) {
+            const bonus = speedBonuses[i];
+            if (
+              cat.x < bonus.x + bonus.width &&
+              cat.x + cat.width > bonus.x &&
+              cat.y < bonus.y + bonus.height &&
+              cat.y + cat.height > bonus.y
+            ) {
+              speedBonuses.splice(i, 1);
+              cat.speed += 0.5; // Augmenter la vitesse du chat
+            }
+          }
+
           if (!onPlatform) {
             cat.isJumping = true;
           }
@@ -296,6 +346,24 @@
           }
         }
 
+        function addSpeedBonus() {
+          const platform =
+            platforms[Math.floor(Math.random() * platforms.length)];
+          speedBonuses.push({
+            x: platform.x + platform.width / 2 - 15,
+            y: platform.y - 30,
+            width: 30,
+            height: 30,
+          });
+        }
+
+        function increasePlatformWidth() {
+          platformWidth += 10; // Augmenter la largeur des plateformes
+          platforms.forEach((platform) => {
+            platform.width = platformWidth;
+          });
+        }
+
         function gameLoop() {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -307,6 +375,8 @@
           drawPlatforms();
           drawCat();
           drawBonuses();
+          drawShopButton(); // Dessine le bouton shop
+          drawAccueilButton();
           drawScore();
 
           if (gameOver) {
@@ -318,9 +388,11 @@
             requestAnimationFrame(gameLoop);
           }
         }
-
         function restartGame() {
+          clearInterval(cameraInterval); // Supprimer l'intervalle précédent
           platforms = [];
+          bonuses = [];
+          speedBonuses = [];
           generatePlatforms();
           cat.dx = 0;
           cat.dy = 0;
@@ -330,9 +402,12 @@
           gameOver = false;
           cameraX = 0;
           score = 0;
+          cameraSpeed = 1.5; // Réinitialiser la vitesse de la caméra
+          platformWidth = 150; // Réinitialiser la largeur des plateformes
           loadGameState();
           gameLoop();
         }
+        let cameraInterval;
 
         function startGame() {
           if (
@@ -340,18 +415,30 @@
             catSpriteLeft.complete &&
             platformSprite.complete &&
             bonusSprite.complete &&
+            speedBonusSprite.complete &&
             backgroundSprite.complete &&
-            luneImg.complete
+            luneImg.complete &&
+            shopSprite.complete &&
+            AccueilSprite.complete
           ) {
             loadGameState();
             restartGame();
+            // Augmenter la vitesse de la caméra toutes les 3000 millisecondes (3 secondes)
+            cameraInterval = setInterval(() => {
+              cameraSpeed += 0.1;
+              increasePlatformWidth();
+              addSpeedBonus();
+            }, 3000);
           } else {
             catSpriteRight.onload = restartGame;
             catSpriteLeft.onload = restartGame;
             platformSprite.onload = restartGame;
             bonusSprite.onload = restartGame;
+            speedBonusSprite.onload = restartGame;
             backgroundSprite.onload = restartGame;
             luneImg.onload = restartGame;
+            shopSprite.onload = restartGame;
+            AccueilSprite.onload = restartGame;
           }
         }
 
@@ -391,11 +478,52 @@
                 cat.dy = cat.jumpStrength;
               }
               break;
+            case "ArrowLeft":
+              cat.dx = -cat.speed;
+              cat.direction = "left";
+              break;
+            case "ArrowRight":
+              cat.dx = cat.speed;
+              cat.direction = "right";
+              break;
+          }
+        });
+
+        document.addEventListener("keyup", (event) => {
+          switch (event.key) {
+            case "ArrowLeft":
+            case "ArrowRight":
+              cat.dx = 0;
+              break;
+          }
+        });
+
+        canvas.addEventListener("click", (event) => {
+          const rect = canvas.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+
+          // Vérifiez le clic sur le bouton "Shop"
+          if (
+            x > canvas.width - 60 &&
+            x < canvas.width - 10 &&
+            y > 10 &&
+            y < 60
+          ) {
+            window.location.href = "shop.html";
+          }
+          // Vérifiez le clic sur le bouton "Accueil"
+          else if (
+            x > canvas.width - 120 &&
+            x < canvas.width - 70 &&
+            y > 10 &&
+            y < 60
+          ) {
+            window.location.href = "index.html";
           }
         });
 
         restartButton.addEventListener("click", () => {
-          cameraSpeed = 0.5; // Réinitialiser la vitesse de la caméra
           restartGame();
         });
 

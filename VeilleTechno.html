@@ -1,11 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Flutter</title>
+    <style>
+      body {
+        background-color: #121212;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+      }
+      header {
+        text-align: center;
+        padding: 20px 0;
+      }
+      h1 {
+        color: #ffffff;
+      }
+      .card {
+        background-color: #1e1e1e;
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .card img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      ul li {
+        background-color: #2e2e2e;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      a:hover {
+        background-color: #0056b3;
+      }
+    </style>
   </head>
   <body>
-    <a href="index.html" class="btn btn-primary">Accueil</a>
+    <div class="container">
+      <header>
+        <a href="index.html">Accueil</a>
+        <h1>Présentation de Flutter</h1>
+      </header>
+
+      <div class="card">
+        <p>
+          Flutter est un kit de développement logiciel (SDK) open-source créé
+          par Google, permettant de développer des applications pour Android,
+          iOS, Windows, Linux, macOS, et les navigateurs web à partir d'une
+          seule base de code. Voici les points clés à retenir sur Flutter :
+        </p>
+
+        <ul>
+          <li>
+            <strong>Développement Multiplateforme :</strong> Flutter permet de
+            créer des applications natives pour plusieurs plateformes à partir
+            d'un code source unique. Cela simplifie le processus de
+            développement et réduit les coûts associés à la maintenance de
+            plusieurs bases de code.
+          </li>
+          <li>
+            <strong>Performance :</strong> Les applications Flutter sont
+            compilées directement en code natif pour chaque plateforme, ce qui
+            garantit des performances élevées sans nécessiter de module
+            d'exécution ou de navigateur.
+          </li>
+          <li>
+            <strong>Interface Utilisateur :</strong> Flutter offre une vaste
+            bibliothèque de widgets personnalisables qui suivent les directives
+            de conception spécifiques à chaque plateforme, permettant de créer
+            des interfaces utilisateur attrayantes et réactives.
+          </li>
+          <li>
+            <strong>Hot Reload :</strong> Cette fonctionnalité permet aux
+            développeurs de voir instantanément les modifications apportées au
+            code, accélérant ainsi le processus de développement et de débogage.
+          </li>
+          <li>
+            <strong>Communauté et Support :</strong> Flutter est soutenu par
+            Google et une communauté mondiale de développeurs, ce qui garantit
+            des mises à jour régulières et un large éventail de ressources et de
+            plugins disponibles.
+          </li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Actualités Récentes sur Flutter</h2>
+        <ul>
+          <li>
+            <strong>Flutter News Toolkit :</strong> Ce kit réduit le temps de
+            développement des applications mobiles jusqu'à 80 % grâce à des
+            modules préconstruits pour des fonctionnalités critiques comme
+            l'intégration des utilisateurs, les flux de contenu, les analyses,
+            les notifications, et les publicités.
+          </li>
+          <li>
+            <strong>Support Multiplateforme :</strong> Flutter 3 a stabilisé le
+            support pour macOS et Linux, complétant ainsi sa feuille de route
+            multiplateforme. Cette version inclut également le support pour
+            Apple Silicon et un nouveau Casual Game Toolkit.
+          </li>
+          <li>
+            <strong>Écosystème en Expansion :</strong> L'écosystème open-source
+            autour de Flutter continue de croître avec de nouvelles
+            fonctionnalités et outils pour aider les développeurs dans leur
+            quotidien.
+          </li>
+        </ul>
+      </div>
+
+      <p>
+        Flutter est donc un choix robuste et flexible pour le développement
+        d'applications modernes, offrant à la fois performance et efficacité.
+      </p>
+
+      <p><strong>Sources :</strong></p>
+      <ul>
+        <li>Ionos.com</li>
+        <li>flutter.dev</li>
+        <li>frandroid.com</li>
+        <li>infoq.com</li>
+        <li>flutter-digest.com</li>
+      </ul>
+    </div>
   </body>
 </html>

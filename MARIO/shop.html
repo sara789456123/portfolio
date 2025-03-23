@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+        max-width: 800px;
+      }
+      canvas {
+        border: 1px solid #ddd;
+        width: 50%;
+      }
+      .hat-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 10px;
+      }
+      .hats {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+      #accueilButton {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+      }
+      #supprButtonContainer {
+        position: relative;
+        top: -80px;
+        left: -80px;
+      }
+      #supprButton {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Bienvenue dans le Shop</h1>
+    <div class="container">
+      <canvas id="shopCanvas" width="400" height="400"></canvas>
+      <div class="hats">
+        <div class="hat-container">
+          <canvas id="hatCanvas1" width="100" height="100"></canvas>
+          <button class="buyButton" data-hat="hat">Acheter : 10$</button>
+        </div>
+        <div class="hat-container">
+          <canvas id="hatCanvas2" width="100" height="100"></canvas>
+          <button class="buyButton" data-hat="crown">Acheter : 100$</button>
+        </div>
+        <div class="hat-container">
+          <canvas id="hatCanvas3" width="100" height="100"></canvas>
+          <button class="buyButton" data-hat="hautforme">Acheter : 20$</button>
+        </div>
+      </div>
+    </div>
+    <div id="supprButtonContainer">
+      <button id="supprButton">Enlever</button>
+    </div>
+    <button id="accueilButton">Accueil</button>
+
+    <img id="AccueilSprite" src="./img/maison.png" style="display: none" />
+    <img
+      id="ButtongobackGameSprite"
+      src="./img/ButtongobackGame.png"
+      style="display: none"
+    />
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const canvas = document.getElementById("shopCanvas");
+        const ctx = canvas.getContext("2d");
+        const accueilButton = document.getElementById("accueilButton");
+        const supprButton = document.getElementById("supprButton");
+
+        // Chargez les images
+        const catImage = new Image();
+        catImage.src = "./img/catdroite.png";
+
+        const catHatImage = new Image();
+        catHatImage.src = "./img/catdroite_hat.png";
+
+        const catCrownImage = new Image();
+        catCrownImage.src = "./img/catdroite_crown.png";
+
+        const catHautFormeImage = new Image();
+        catHautFormeImage.src = "./img/catdroite_hautforme.png";
+
+        const hatImage = new Image();
+        hatImage.src = "./img/hat.png";
+
+        const crownImage = new Image();
+        crownImage.src = "./img/crown.png";
+
+        const hautformeImage = new Image();
+        hautformeImage.src = "./img/haut_forme.png";
+
+        const dragounetBackground = new Image();
+        hautformeImage.src = "./img/dragonet.png";
+
+        const AccueilSprite = new Image();
+        AccueilSprite.src = "./img/maison.png";
+
+        const ButtongobackGameSprite = new Image();
+        ButtongobackGameSprite.src = "./img/ButtongobackGame.png";
+
+        // Dessinez les images sur le canvas
+        function drawImages() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // Dessinez l'image de gauche
+          ctx.drawImage(catImage, 50, 50, 300, 300);
+
+          // Dessinez les images des chapeaux sur leurs canevas respectifs
+          drawHat(hatImage, document.getElementById("hatCanvas1"));
+          drawHat(crownImage, document.getElementById("hatCanvas2"));
+          drawHat(hautformeImage, document.getElementById("hatCanvas3"));
+
+          // Dessinez le sprite Accueil
+          ctx.drawImage(AccueilSprite, canvas.width - 120, 10, 50, 50);
+
+          // Dessinez le bouton "Retour au jeu"
+          ctx.drawImage(ButtongobackGameSprite, canvas.width - 180, 10, 50, 50);
+        }
+
+        function drawHat(image, hatCanvas) {
+          const hatCtx = hatCanvas.getContext("2d");
+          hatCtx.clearRect(0, 0, hatCanvas.width, hatCanvas.height);
+          hatCtx.drawImage(image, 0, 0, hatCanvas.width, hatCanvas.height);
+        }
+
+        // Dessinez les images initiales
+        catImage.onload = drawImages;
+        hatImage.onload = drawImages;
+        crownImage.onload = drawImages;
+        hautformeImage.onload = drawImages;
+        AccueilSprite.onload = drawImages;
+        ButtongobackGameSprite.onload = drawImages;
+
+        // Ajoutez un gestionnaire d'événements pour les boutons "Acheter"
+        document.querySelectorAll(".buyButton").forEach((button) => {
+          button.addEventListener("click", function () {
+            const hatType = button.getAttribute("data-hat");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (hatType === "hat") {
+              ctx.drawImage(catHatImage, 50, 50, 300, 300);
+              localStorage.setItem("selectedHat", "hat");
+            } else if (hatType === "crown") {
+              ctx.drawImage(catCrownImage, 50, 50, 300, 300);
+              localStorage.setItem("selectedHat", "crown");
+            } else if (hatType === "hautforme") {
+              ctx.drawImage(catHautFormeImage, 50, 50, 300, 300);
+              localStorage.setItem("selectedHat", "hautforme");
+            }
+            ctx.drawImage(AccueilSprite, canvas.width - 120, 10, 50, 50);
+            ctx.drawImage(
+              ButtongobackGameSprite,
+              canvas.width - 180,
+              10,
+              50,
+              50
+            );
+          });
+        });
+
+        supprButton.addEventListener("click", function () {
+          // Remplacez l'image de gauche par catdroite.png
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(catImage, 50, 50, 300, 300);
+          ctx.drawImage(AccueilSprite, canvas.width - 120, 10, 50, 50); // Dessine le bouton shop à une position fixe
+          ctx.drawImage(ButtongobackGameSprite, canvas.width - 180, 10, 50, 50);
+          localStorage.removeItem("selectedHat");
+        });
+
+        // Ajoutez un gestionnaire d'événements pour le clic sur le canvas
+        canvas.addEventListener("click", (event) => {
+          const rect = canvas.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+
+          // Vérifiez le clic sur le sprite "Accueil"
+          if (
+            x > canvas.width - 120 &&
+            x < canvas.width - 70 &&
+            y > 10 &&
+            y < 60
+          ) {
+            window.location.href = "index.html";
+          }
+          // Vérifiez le clic sur le bouton "Retour au jeu"
+          else if (
+            x > canvas.width - 180 &&
+            x < canvas.width - 130 &&
+            y > 10 &&
+            y < 60
+          ) {
+            history.back();
+          }
+        });
+
+        accueilButton.addEventListener("click", () => {
+          window.location.href = "index.html";
+        });
+      });
+    </script>
+  </body>
+</html>

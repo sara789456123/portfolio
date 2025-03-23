@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-
     <link rel="stylesheet" href="game.js" />
     <title>Cat Game</title>
   </head>
@@ -12,12 +11,34 @@
     #leaderboard {
       display: none;
     }
+    #usernameModal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      border: 1px solid #ddd;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    #closeButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
   </style>
   <body>
     <button id="btnRetour" onclick="location.href='../index.html';">
       Retour
     </button>
-    <button id="btnHome" onclick="location.href='index.html';">Accueil</button>
 
     <div id="record">Record: 0</div>
     <div id="bonusCount">Argent: 0</div>
@@ -38,6 +59,7 @@
       </table>
     </div>
     <div id="usernameModal">
+      <button id="closeButton">&times;</button>
       <h2>Entrer votre pseudo:</h2>
       <input type="text" id="usernameInput" placeholder="Your name" />
       <button id="submitUsernameButton">Envoyer</button>
@@ -46,6 +68,23 @@
     <img id="catSpriteRight" src="./img/catdroite.png" style="display: none" />
     <img id="catSpriteLeft" src="./img/catgauche.png" style="display: none" />
     <img id="bonusSprite" src="./img/bonus.png" style="display: none" />
+    <img id="shopSprite" src="./img/shop.png" style="display: none" />
+    <img id="AccueilSprite" src="./img/maison.png" style="display: none" />
+    <img
+      id="catHatSprite"
+      src="./img/catdroite_hat.png"
+      style="display: none"
+    />
+    <img
+      id="catCrownSprite"
+      src="./img/catdroite_crown.png"
+      style="display: none"
+    />
+    <img
+      id="catHautFormeSprite"
+      src="./img/catdroite_hautforme.png"
+      style="display: none"
+    />
     <script>
       const canvas = document.getElementById("gameCanvas");
       const ctx = canvas.getContext("2d");
@@ -59,6 +98,7 @@
       const submitUsernameButton = document.getElementById(
         "submitUsernameButton"
       );
+      const closeButton = document.getElementById("closeButton");
 
       const platformSprite = new Image();
       platformSprite.src = "./img/plateforme.png";
@@ -74,6 +114,21 @@
 
       const backgroundSprite = new Image();
       backgroundSprite.src = "./img/blue-sky.avif";
+
+      const shopSprite = new Image();
+      shopSprite.src = "./img/shop.png";
+
+      const AccueilSprite = new Image();
+      AccueilSprite.src = "./img/maison.png";
+
+      const catHatSprite = new Image();
+      catHatSprite.src = "./img/catdroite_hat.png";
+
+      const catCrownSprite = new Image();
+      catCrownSprite.src = "./img/catdroite_crown.png";
+
+      const catHautFormeSprite = new Image();
+      catHautFormeSprite.src = "./img/catdroite_hautforme.png";
 
       const cat = {
         x: 0,
@@ -123,8 +178,21 @@
       }
 
       function drawCat() {
-        const catSprite =
-          cat.direction === "left" ? catSpriteLeft : catSpriteRight;
+        const selectedHat = localStorage.getItem("selectedHat");
+        let catSprite = catSpriteRight;
+
+        if (cat.direction === "left") {
+          catSprite = catSpriteLeft;
+        }
+
+        if (selectedHat === "hat") {
+          catSprite = catHatSprite;
+        } else if (selectedHat === "crown") {
+          catSprite = catCrownSprite;
+        } else if (selectedHat === "hautforme") {
+          catSprite = catHautFormeSprite;
+        }
+
         ctx.drawImage(catSprite, cat.x - cameraX, cat.y, cat.width, cat.height);
       }
 
@@ -156,6 +224,13 @@
         ctx.fillStyle = "black";
         ctx.font = "24px Arial";
         ctx.fillText(`Score: ${score}`, 10, 30);
+      }
+
+      function drawShopButton() {
+        ctx.drawImage(shopSprite, canvas.width - 60, 10, 50, 50); // Dessine le bouton shop à une position fixe
+      }
+      function drawAccueilButton() {
+        ctx.drawImage(AccueilSprite, canvas.width - 120, 10, 50, 50); // Dessine le bouton shop à une position fixe
       }
 
       function drawBonusCount() {
@@ -237,7 +312,9 @@
         if (cat.y + cat.height > canvas.height) {
           gameOver = true;
           hasLostOnce = true;
-          showUsernameModal();
+          if (score > record) {
+            showUsernameModal();
+          }
         } else {
           cat.dy += gravity;
         }
@@ -296,6 +373,8 @@
 
         drawPlatforms();
         drawCat();
+        drawShopButton();
+        drawAccueilButton();
         drawBonuses();
         drawScore();
 
@@ -330,7 +409,12 @@
           catSpriteLeft.complete &&
           platformSprite.complete &&
           bonusSprite.complete &&
-          backgroundSprite
+          backgroundSprite &&
+          shopSprite.complete &&
+          AccueilSprite.complete &&
+          catHatSprite.complete &&
+          catCrownSprite.complete &&
+          catHautFormeSprite.complete
         ) {
           loadGameState();
           restartGame();
@@ -344,7 +428,7 @@
       }
 
       function showUsernameModal() {
-        usernameModal.style.display = "block";
+        usernameModal.style.display = "flex";
       }
 
       function hideUsernameModal() {
@@ -383,6 +467,10 @@
         }
       });
 
+      closeButton.addEventListener("click", () => {
+        hideUsernameModal();
+      });
+
       document.addEventListener("keydown", (event) => {
         if (gameOver) return;
 
@@ -394,11 +482,11 @@
             break;
           case "ArrowLeft":
             cat.dx = -cat.speed;
-            cat.direction = "left"; // Update direction
+            cat.direction = "left";
             break;
           case "ArrowRight":
             cat.dx = cat.speed;
-            cat.direction = "right"; // Update direction
+            cat.direction = "right";
             break;
         }
       });
@@ -409,6 +497,31 @@
           case "ArrowRight":
             cat.dx = 0;
             break;
+        }
+      });
+
+      canvas.addEventListener("click", (event) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        // Vérifiez le clic sur le bouton "Shop"
+        if (
+          x > canvas.width - 60 &&
+          x < canvas.width - 10 &&
+          y > 10 &&
+          y < 60
+        ) {
+          window.location.href = "shop.html";
+        }
+        // Vérifiez le clic sur le bouton "Accueil"
+        else if (
+          x > canvas.width - 120 &&
+          x < canvas.width - 70 &&
+          y > 10 &&
+          y < 60
+        ) {
+          window.location.href = "index.html";
         }
       });
 
