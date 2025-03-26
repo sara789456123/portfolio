@@ -59,6 +59,37 @@
       a:hover {
         background-color: #0056b3;
       }
+      .toc {
+        margin-top: 20px;
+      }
+      .toc a {
+        display: block;
+        margin: 5px 0;
+        padding: 10px;
+        background-color: #2e2e2e;
+        border-radius: 5px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #333;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #1e1e1e;
+      }
+      td {
+        background-color: #2e2e2e;
+      }
     </style>
   </head>
   <body>
@@ -68,7 +99,19 @@
         <h1>Présentation de Flutter</h1>
       </header>
 
+      <div class="toc">
+        <h2>Table des Matières</h2>
+        <a href="#introduction">Introduction</a>
+        <a href="#points-cles">Points Clés</a>
+        <a href="#actualites">Actualités Récentes</a>
+        <a href="#mise-a-jour-3.29">Mise à Jour 3.29</a>
+        <a href="#dart-explication">Qu'est-ce que Dart ?</a>
+        <a href="#notes-personnelles">Notes Personnelles</a>
+      </div>
+      <br />
+
       <div class="card">
+        <h2 id="points-cles">Points Clés</h2>
         <p>
           Flutter est un kit de développement logiciel (SDK) open-source créé
           par Google, permettant de développer des applications pour Android,
@@ -78,11 +121,12 @@
 
         <ul>
           <li>
-            <strong>Développement Multiplateforme :</strong> Flutter permet de
-            créer des applications natives pour plusieurs plateformes à partir
-            d'un code source unique. Cela simplifie le processus de
-            développement et réduit les coûts associés à la maintenance de
-            plusieurs bases de code.
+            <strong>Développement Multiplateforme :</strong>
+            <img src="./multiflutter.png" alt="Flutter Multiplateforme" />
+            Flutter permet de créer des applications natives pour plusieurs
+            plateformes à partir d'un code source unique. Cela simplifie le
+            processus de développement et réduit les coûts associés à la
+            maintenance de plusieurs bases de code.
           </li>
           <li>
             <strong>Performance :</strong> Les applications Flutter sont
@@ -110,7 +154,7 @@
         </ul>
       </div>
       <div class="card">
-        <h2>Actualités Récentes sur Flutter</h2>
+        <h2 id="actualites">Actualités Récentes sur Flutter</h2>
         <ul>
           <li>
             <strong>Flutter News Toolkit :</strong> Ce kit réduit le temps de
@@ -134,6 +178,67 @@
         </ul>
       </div>
 
+      <div class="card">
+        <h2 id="mise-a-jour-3.29">Mise à Jour 3.29</h2>
+        <img src="./3.29.jpg" alt="photo mise à jour flutter" />
+
+        <p>
+          Flutter 3.29 apporte des améliorations pour rendre les applications
+          plus rapides et plus belles sur tous les appareils. Elle ajoute de
+          nouvelles fonctionnalités comme des barres de navigation améliorées et
+          des transitions d'écran plus fluides. La mise à jour rend aussi plus
+          facile la sélection de texte et améliore l'accessibilité pour les
+          personnes utilisant des lecteurs d'écran. Elle corrige également des
+          problèmes de stabilité sur Android et simplifie le code sur iOS pour
+          rendre les applications plus performantes. En résumé, cette version
+          vise à rendre les applications plus agréables à utiliser et plus
+          efficaces.
+        </p>
+
+        <h3>Actualités Récentes</h3>
+        <p>
+          Flutter continue d'évoluer avec des mises à jour régulières. La
+          dernière mise à jour inclut des améliorations significatives dans la
+          performance et la stabilité des applications. De plus, de nouvelles
+          fonctionnalités ont été ajoutées pour améliorer l'expérience
+          utilisateur et faciliter le développement.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2 id="dart-explication">Qu'est-ce que Dart ?</h2>
+        <img src="./dart.png" alt="Dart Logo" />
+        <table>
+          <tr>
+            <th>Caractéristique</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>Langage de Programmation</td>
+            <td>Dart est un langage de programmation développé par Google.</td>
+          </tr>
+          <tr>
+            <td>Typage</td>
+            <td>Dart est un langage à typage statique et optionnel.</td>
+          </tr>
+          <tr>
+            <td>Compilation</td>
+            <td>Il peut être compilé en JavaScript ou en code natif.</td>
+          </tr>
+          <tr>
+            <td>Utilisation</td>
+            <td>
+              Principalement utilisé avec Flutter pour le développement
+              d'applications multiplateformes.
+            </td>
+          </tr>
+          <tr>
+            <td>Syntaxe</td>
+            <td>La syntaxe de Dart est similaire à celle de C++ et Java.</td>
+          </tr>
+        </table>
+      </div>
+
       <p>
         Flutter est donc un choix robuste et flexible pour le développement
         d'applications modernes, offrant à la fois performance et efficacité.
@@ -146,7 +251,36 @@
         <li>frandroid.com</li>
         <li>infoq.com</li>
         <li>flutter-digest.com</li>
+        <li>
+          <a
+            href="https://digitalunicorn.fr/flutter-vs-react-native-comment-choisir/"
+            >Digital Unicorn</a
+          >
+        </li>
       </ul>
+    </div>
+
+    <div>
+      <h1 id="notes-personnelles">Mes Notes</h1>
+      <h2>Open-source, est gratuit.</h2>
+      <h2>
+        Flutter est plus difficile à maîtriser à cause de Dart qui ressemble à
+        du C++ qui est un langage peu populaire
+      </h2>
+      <h2>Son installation prend du temps, car c'est assez complexe ;</h2>
+      <h2>
+        Flutter est une plateforme de développement d’applications mobiles ou
+        SDK créée par Google en 2018. Ce framework est conçu pour développer des
+        interfaces mobiles📱 pour tous genres de plateforme et de système
+        d’exploitation comme Android, iOS, Windows, Linux et même les
+        applications web ou Web app💻. Pour cela, il utilise le langage de
+        programmation Dart pour créer des interfaces engageantes et séduisantes.
+        De ce fait, il est de type front-end et webdesign, idéal pour développer
+        rapidement et simplement des applications mobiles📱 et web grâce à ses
+        widgets et ses outils. Ce dernier sera mis à disposition du développeur
+        full stack, back-end et front-end utilisant Java, C ou objective C.
+      </h2>
+      <h2>14 février mise à jour 3.29</h2>
     </div>
   </body>
 </html>

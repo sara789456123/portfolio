@@ -87,6 +87,25 @@
       #closeButton:hover {
         background-color: rgb(201, 46, 70);
       }
+      #optionsModal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border: 1px solid #ddd;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      #optionsButton,
+      #fullscreenOption,
+      #closeOptionsButton {
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 5px;
+      }
     </style>
   </head>
   <body>
@@ -94,6 +113,10 @@
       Retour
     </button>
     <canvas id="welcomeCanvas" width="800" height="400"></canvas>
+    <div id="optionsModal" style="display: none">
+      <button id="fullscreenOption">Plein écran</button>
+      <button id="closeOptionsButton">Fermer</button>
+    </div>
     <div id="leaderboard">
       <h2>Leaderboard</h2>
       <table>
@@ -116,7 +139,9 @@
       const leaderboard = document.getElementById("leaderboard");
       const leaderboardBody = document.getElementById("leaderboardBody");
       const closeButton = document.getElementById("closeButton");
-
+      const optionsModal = document.getElementById("optionsModal");
+      const fullscreenOption = document.getElementById("fullscreenOption");
+      const closeOptionsButton = document.getElementById("closeOptionsButton");
       const backgroundSprite = new Image();
       backgroundSprite.src = "./img/blue-sky.avif";
 
@@ -124,17 +149,65 @@
       backgroundSprite.onload = function () {
         ctx.drawImage(backgroundSprite, 0, 0, canvas.width, canvas.height);
         drawButtons();
-        drawPlayButtonRUN();
       };
+
       function drawButtons() {
         drawPlayButton();
-
         drawRecordButton();
+        drawPlayButtonRUN();
+        drawOptionsButton(); // Dessinez le bouton "Options" en dernier pour qu'il soit visible
       }
+
+      function drawOptionsButton() {
+        const buttonX = canvas.width / 2 - 100;
+        const buttonY = canvas.height / 2 - 175; // Positionné au-dessus du bouton "Records" avec espace
+        const buttonWidth = 200;
+        const buttonHeight = 50;
+
+        ctx.fillStyle = "rgb(51, 195, 255)";
+        ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+
+        ctx.fillStyle = "hsl(0, 0%, 100%)";
+        ctx.font = "20px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(
+          "Options",
+          canvas.width / 2,
+          buttonY + buttonHeight / 2 + 5
+        );
+
+        canvas.addEventListener("click", function (event) {
+          const rect = canvas.getBoundingClientRect();
+          const mouseX = event.clientX - rect.left;
+          const mouseY = event.clientY - rect.top;
+
+          if (
+            mouseX >= buttonX &&
+            mouseX <= buttonX + buttonWidth &&
+            mouseY >= buttonY &&
+            mouseY <= buttonY + buttonHeight
+          ) {
+            optionsModal.style.display = "block";
+          }
+        });
+      }
+
+      closeOptionsButton.addEventListener("click", () => {
+        optionsModal.style.display = "none";
+      });
+
+      fullscreenOption.addEventListener("click", () => {
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        } else {
+          canvas.requestFullscreen();
+        }
+        optionsModal.style.display = "none";
+      });
 
       function drawPlayButton() {
         const buttonX = canvas.width / 2 - 100;
-        const buttonY = canvas.height / 2 - 50;
+        const buttonY = canvas.height / 2 - 250; // Ajusté pour laisser un espace en haut
         const buttonWidth = 200;
         const buttonHeight = 50;
 
@@ -147,7 +220,7 @@
         ctx.fillText(
           "Mode Tranquille",
           canvas.width / 2,
-          canvas.height / 2 - 25 + 5
+          buttonY + buttonHeight / 2 + 5
         );
 
         canvas.addEventListener("click", function (event) {
@@ -165,9 +238,10 @@
           }
         });
       }
+
       function drawPlayButtonRUN() {
         const buttonX = canvas.width / 2 - 100;
-        const buttonY = canvas.height / 2 + 100; // Positionnez le bouton en dessous des autres
+        const buttonY = canvas.height / 2 + 75; // Positionné juste en dessous du bouton "Records" avec espace
         const buttonWidth = 200;
         const buttonHeight = 50;
 
@@ -201,7 +275,7 @@
 
       function drawRecordButton() {
         const buttonX = canvas.width / 2 - 100;
-        const buttonY = canvas.height / 2 + 25;
+        const buttonY = canvas.height / 2 - 100; // Positionné juste en dessous du bouton "Options" avec espace
         const buttonWidth = 200;
         const buttonHeight = 50;
 
@@ -211,7 +285,11 @@
         ctx.fillStyle = "hsl(0, 0%, 100%)";
         ctx.font = "20px Arial";
         ctx.textAlign = "center";
-        ctx.fillText("Records", canvas.width / 2, canvas.height / 2 + 50 + 5);
+        ctx.fillText(
+          "Records",
+          canvas.width / 2,
+          buttonY + buttonHeight / 2 + 5
+        );
 
         canvas.addEventListener("click", function (event) {
           const rect = canvas.getBoundingClientRect();
