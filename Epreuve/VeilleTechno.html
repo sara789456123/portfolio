@@ -90,12 +90,28 @@
       td {
         background-color: #2e2e2e;
       }
+      .btn {
+        padding: 15px 35px;
+        background: #00ffcc;
+        color: #0a0a0a;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out;
+        font-size: 18px;
+        margin-left: 40%;
+      }
+
+      .btn:hover {
+        background: #00cca3;
+        color: #fff;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <header>
-        <a href="index.html">Accueil</a>
+        <a href="../index.html">Accueil</a>
         <h1>Présentation de Flutter</h1>
       </header>
 
@@ -210,7 +226,7 @@
 
       <div class="card">
         <h2 id="dart-explication">Qu'est-ce que Dart ?</h2>
-        <img src="../img_epreuve/dart.png" alt="Dart Logo" />
+        <img src="../img_epreuve/dart.jpg" alt="Dart Logo" />
         <table>
           <tr>
             <th>Caractéristique</th>
@@ -254,36 +270,11 @@
         <li>frandroid.com</li>
         <li>infoq.com</li>
         <li>flutter-digest.com</li>
-        <li>
-          <a
-            href="https://digitalunicorn.fr/flutter-vs-react-native-comment-choisir/"
-            >Digital Unicorn</a
-          >
-        </li>
+        <li>Digital Unicorn</li>
       </ul>
     </div>
-
-    <div>
-      <h1 id="notes-personnelles">Mes Notes</h1>
-      <h2>Open-source, est gratuit.</h2>
-      <h2>
-        Flutter est plus difficile à maîtriser à cause de Dart qui ressemble à
-        du C++ qui est un langage peu populaire
-      </h2>
-      <h2>Son installation prend du temps, car c'est assez complexe ;</h2>
-      <h2>
-        Flutter est une plateforme de développement d’applications mobiles ou
-        SDK créée par Google en 2018. Ce framework est conçu pour développer des
-        interfaces mobiles📱 pour tous genres de plateforme et de système
-        d’exploitation comme Android, iOS, Windows, Linux et même les
-        applications web ou Web app💻. Pour cela, il utilise le langage de
-        programmation Dart pour créer des interfaces engageantes et séduisantes.
-        De ce fait, il est de type front-end et webdesign, idéal pour développer
-        rapidement et simplement des applications mobiles📱 et web grâce à ses
-        widgets et ses outils. Ce dernier sera mis à disposition du développeur
-        full stack, back-end et front-end utilisant Java, C ou objective C.
-      </h2>
-      <h2>14 février mise à jour 3.29</h2>
-    </div>
+    <button class="btn" onclick="location.href='../pdf/Flutter.pdf';">
+      Ma veille Technologique
+    </button>
   </body>
 </html>
