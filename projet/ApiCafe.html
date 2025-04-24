@@ -19,6 +19,9 @@
         opacity: 0.7;
         transition: opacity 0.3s ease;
       }
+      #retour:hover {
+        opacity: 1;
+      }
       .section {
         margin: 20px 0;
       }
@@ -52,12 +55,32 @@
         <span class="home-title-color">Api Cafe</span>
       </h1>
     </section>
-    <h1>Api Cafe</h1>
-    <p>L'application contient une API faite un MVC et tester sur Postman avec la posibiliter de ce connecter avec un jeton et autre routes</p>
-    <h2>Ensuite creation d'un Projet React pour intérroger l'api et afficher dans un tableau les informations des dosettes ainsi que de pouvoir le filter/ modifier/ajouter/supprimer si l'on est administrateur et une page d'authentification</h2>
-    <button id="retour" onclick="location.href='../index.html#workforma';">Retour</button>
+
+    <h2 class="section-title">Api Cafe</h2>
+    <div class="about-container">
+      <p>
+        L'application contient une API faite en MVC et testée sur Postman avec
+        la possibilité de se connecter avec un jeton et d'autres routes.
+      </p>
+    </div>
+  </section>
+
+
+  <h2 class="section-title">Interface React</h2>
+    <div class="about-container">
+      <p>
+        Ensuite, création d'un projet React pour interroger l'API et afficher
+        dans un tableau les informations des dosettes ainsi que de pouvoir les
+        filtrer, modifier, ajouter ou supprimer si l'on est administrateur, et
+        une page d'authentification.
+      </p>
+    </div>
+  </section>
+
+    <button id="retour" onclick="location.href='../index.html#workforma';">
       Retour
     </button>
+
     <footer class="footer">
       <p>&copy; 2025 Camping API. Tous droits réservés.</p>
     </footer>
