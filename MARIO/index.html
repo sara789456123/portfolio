@@ -152,7 +152,7 @@
       };
 
       function drawButtons() {
-        drawPlayButton();
+        drawPlayButton(); // Dessinez le bouton "Play" en premier
         drawRecordButton();
         drawPlayButtonRUN();
         drawOptionsButton(); // Dessinez le bouton "Options" en dernier pour qu'il soit visible
@@ -160,7 +160,7 @@
 
       function drawOptionsButton() {
         const buttonX = canvas.width / 2 - 100;
-        const buttonY = canvas.height / 2 - 175; // Positionné au-dessus du bouton "Records" avec espace
+        const buttonY = canvas.height / 2 - 50; // Positionné au-dessus du bouton "Records" avec espace
         const buttonWidth = 200;
         const buttonHeight = 50;
 
@@ -207,7 +207,7 @@
 
       function drawPlayButton() {
         const buttonX = canvas.width / 2 - 100;
-        const buttonY = canvas.height / 2 - 250; // Ajusté pour laisser un espace en haut
+        const buttonY = canvas.height / 2 - 200; // Ajusté pour laisser un espace en haut
         const buttonWidth = 200;
         const buttonHeight = 50;
 
@@ -241,7 +241,7 @@
 
       function drawPlayButtonRUN() {
         const buttonX = canvas.width / 2 - 100;
-        const buttonY = canvas.height / 2 + 75; // Positionné juste en dessous du bouton "Records" avec espace
+        const buttonY = canvas.height / 2 + 125; // Positionné juste en dessous du bouton "Records" avec espace
         const buttonWidth = 200;
         const buttonHeight = 50;
 

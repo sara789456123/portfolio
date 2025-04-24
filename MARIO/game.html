@@ -3,120 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Accueil</title>
-    <style>
-      body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
-        background-color: #5cd653;
-      }
-      #welcomeCanvas {
-        border: 2px solid black;
-        margin-bottom: 20px;
-      }
-      #btnRetour {
-        position: absolute;
-        left: 20px;
-        top: 20px;
-        background-color: #ecf0f3;
-        box-shadow: #dde9f2;
-        padding: 17px 40px;
-        border-radius: 10px;
-        border: 0;
-      }
-      #btnRetour:hover {
-        box-shadow: rgb(195, 200, 229) 0px 7px 0px 0px;
-      }
-      #btnHome {
-        position: absolute;
-        right: 20px;
-        top: 20px;
-        background-color: #ecf0f3;
-        box-shadow: #dde9f2;
-        padding: 17px 40px;
-        border-radius: 10px;
-        border: 0;
-      }
-      #btnHome:hover {
-        box-shadow: rgb(195, 200, 229) 0px 7px 0px 0px;
-      }
-      #leaderboard {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 20px;
-        border: 1px solid #ddd;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-      #leaderboard h2 {
-        margin-top: 0;
-      }
-      #leaderboard table {
-        border-collapse: collapse;
-        width: 100%;
-        max-width: 400px;
-        margin-top: 10px;
-      }
-      #leaderboard th,
-      #leaderboard td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-      }
-      #leaderboard th {
-        background-color: #f2f2f2;
-      }
-      #closeButton {
-        margin-top: 10px;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        background-color: rgb(255, 56, 86);
-        color: white;
-        cursor: pointer;
-      }
-      #closeButton:hover {
-        background-color: rgb(201, 46, 70);
-      }
-      #optionsModal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        border: 1px solid #ddd;
-        padding: 20px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      #optionsButton,
-      #fullscreenOption,
-      #closeOptionsButton {
-        padding: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        margin: 5px;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="game.js" />
+    <title>Cat Game</title>
   </head>
+  <style>
+    #leaderboard {
+      display: none;
+    }
+    #usernameModal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      border: 1px solid #ddd;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    #closeButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
   <body>
     <button id="btnRetour" onclick="location.href='../index.html';">
       Retour
     </button>
-    <canvas id="welcomeCanvas" width="800" height="400"></canvas>
-    <div id="optionsModal" style="display: none">
-      <button id="fullscreenOption">Plein écran</button>
-      <button id="closeOptionsButton">Fermer</button>
-    </div>
+
+    <div id="record">Record: 0</div>
+    <div id="bonusCount">Argent: 0</div>
+    <canvas id="gameCanvas" width="1000" height="500"></canvas>
+    <button id="restartButton">Restart</button>
     <div id="leaderboard">
       <h2>Leaderboard</h2>
       <table>
@@ -130,193 +57,397 @@
           <!-- Leaderboard rows will be inserted here -->
         </tbody>
       </table>
-      <button id="closeButton">Close</button>
     </div>
-
+    <div id="usernameModal">
+      <button id="closeButton">&times;</button>
+      <h2>Entrer votre pseudo:</h2>
+      <input type="text" id="usernameInput" placeholder="Your name" />
+      <button id="submitUsernameButton">Envoyer</button>
+    </div>
+    <img id="platformSprite" src="./img/plateforme.png" style="display: none" />
+    <img id="catSpriteRight" src="./img/catdroite.png" style="display: none" />
+    <img id="catSpriteLeft" src="./img/catgauche.png" style="display: none" />
+    <img id="bonusSprite" src="./img/bonus.png" style="display: none" />
+    <img id="shopSprite" src="./img/shop.png" style="display: none" />
+    <img id="AccueilSprite" src="./img/maison.png" style="display: none" />
+    <img
+      id="catHatSprite"
+      src="./img/catdroite_hat.png"
+      style="display: none"
+    />
+    <img
+      id="catCrownSprite"
+      src="./img/catdroite_crown.png"
+      style="display: none"
+    />
+    <img
+      id="catHautFormeSprite"
+      src="./img/catdroite_hautforme.png"
+      style="display: none"
+    />
     <script>
-      const canvas = document.getElementById("welcomeCanvas");
+      const canvas = document.getElementById("gameCanvas");
       const ctx = canvas.getContext("2d");
+      const restartButton = document.getElementById("restartButton");
+      const recordElement = document.getElementById("record");
+      const bonusCountElement = document.getElementById("bonusCount");
       const leaderboard = document.getElementById("leaderboard");
       const leaderboardBody = document.getElementById("leaderboardBody");
+      const usernameModal = document.getElementById("usernameModal");
+      const usernameInput = document.getElementById("usernameInput");
+      const submitUsernameButton = document.getElementById(
+        "submitUsernameButton"
+      );
       const closeButton = document.getElementById("closeButton");
-      const optionsModal = document.getElementById("optionsModal");
-      const fullscreenOption = document.getElementById("fullscreenOption");
-      const closeOptionsButton = document.getElementById("closeOptionsButton");
+
+      const platformSprite = new Image();
+      platformSprite.src = "./img/plateforme.png";
+
+      const catSpriteRight = new Image();
+      catSpriteRight.src = "./img/catdroite.png";
+
+      const catSpriteLeft = new Image();
+      catSpriteLeft.src = "./img/catgauche.png";
+
+      const bonusSprite = new Image();
+      bonusSprite.src = "./img/bonus.png";
+
       const backgroundSprite = new Image();
       backgroundSprite.src = "./img/blue-sky.avif";
 
-      // Appelez cette fonction dans backgroundSprite.onload
-      backgroundSprite.onload = function () {
-        ctx.drawImage(backgroundSprite, 0, 0, canvas.width, canvas.height);
-        drawButtons();
+      const shopSprite = new Image();
+      shopSprite.src = "./img/shop.png";
+
+      const AccueilSprite = new Image();
+      AccueilSprite.src = "./img/maison.png";
+
+      const catHatSprite = new Image();
+      catHatSprite.src = "./img/catdroite_hat.png";
+
+      const catCrownSprite = new Image();
+      catCrownSprite.src = "./img/catdroite_crown.png";
+
+      const catHautFormeSprite = new Image();
+      catHautFormeSprite.src = "./img/catdroite_hautforme.png";
+
+      const cat = {
+        x: 0,
+        y: 0,
+        width: 50,
+        height: 50,
+        dx: 0,
+        dy: 0,
+        speed: 3,
+        jumpSpeed: 3,
+        jumpStrength: -15,
+        isJumping: false,
+        direction: "right",
       };
 
-      function drawButtons() {
-        drawPlayButton();
-        drawOptionsButton();
-        drawRecordButton();
-        drawPlayButtonRUN();
-      }
+      let platforms = [];
+      let bonuses = [];
+      let gameOver = false;
+      let cameraX = 0;
+      let score = 0;
+      let record = 0;
+      let bonusCount = 0;
+      let hasLostOnce = false;
+      const platformSpacing = 200;
+      const gravity = 0.7;
+      const minPlatformHeight = 180;
+      const maxPlatformHeight = 300;
+      const platformWidth = 100;
+      const platformHeight = 20;
 
-      function drawOptionsButton() {
-        const buttonX = canvas.width / 2 - 100;
-        const buttonY = canvas.height / 2 - 75; // Positionné au-dessus du bouton "Records"
-        const buttonWidth = 200;
-        const buttonHeight = 50;
-
-        ctx.fillStyle = "rgb(51, 195, 255)";
-        ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
-
-        ctx.fillStyle = "hsl(0, 0%, 100%)";
-        ctx.font = "20px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(
-          "Options",
-          canvas.width / 2,
-          buttonY + buttonHeight / 2 + 5
-        );
-
-        canvas.addEventListener("click", function (event) {
-          const rect = canvas.getBoundingClientRect();
-          const mouseX = event.clientX - rect.left;
-          const mouseY = event.clientY - rect.top;
-
-          if (
-            mouseX >= buttonX &&
-            mouseX <= buttonX + buttonWidth &&
-            mouseY >= buttonY &&
-            mouseY <= buttonY + buttonHeight
-          ) {
-            optionsModal.style.display = "block";
-          }
-        });
-      }
-
-      closeOptionsButton.addEventListener("click", () => {
-        optionsModal.style.display = "none";
-      });
-
-      fullscreenOption.addEventListener("click", () => {
-        if (document.fullscreenElement) {
-          document.exitFullscreen();
-        } else {
-          canvas.requestFullscreen();
+      function loadGameState() {
+        const savedRecord = localStorage.getItem("record");
+        const savedBonusCount = localStorage.getItem("bonusCount");
+        if (savedRecord !== null) {
+          record = parseInt(savedRecord, 10);
+          recordElement.textContent = `Record: ${record}`;
         }
-        optionsModal.style.display = "none";
-      });
+        if (savedBonusCount !== null) {
+          bonusCount = parseInt(savedBonusCount, 10);
+          bonusCountElement.textContent = `Carotte: ${bonusCount}`;
+        }
+      }
 
-      function drawPlayButton() {
-        const buttonX = canvas.width / 2 - 100;
-        const buttonY = canvas.height / 2 - 150; // Ajusté pour réduire l'espace
-        const buttonWidth = 200;
-        const buttonHeight = 50;
+      function saveGameState() {
+        localStorage.setItem("record", record);
+        localStorage.setItem("bonusCount", bonusCount);
+      }
 
-        ctx.fillStyle = "rgb(51, 195, 255)";
-        ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+      function drawCat() {
+        const selectedHat = localStorage.getItem("selectedHat");
+        let catSprite = catSpriteRight;
 
-        ctx.fillStyle = "hsl(0, 0%, 100%)";
-        ctx.font = "20px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(
-          "Mode Tranquille",
-          canvas.width / 2,
-          buttonY + buttonHeight / 2 + 5
-        );
+        if (cat.direction === "left") {
+          catSprite = catSpriteLeft;
+        }
 
-        canvas.addEventListener("click", function (event) {
-          const rect = canvas.getBoundingClientRect();
-          const mouseX = event.clientX - rect.left;
-          const mouseY = event.clientY - rect.top;
+        if (selectedHat === "hat") {
+          catSprite = catHatSprite;
+        } else if (selectedHat === "crown") {
+          catSprite = catCrownSprite;
+        } else if (selectedHat === "hautforme") {
+          catSprite = catHautFormeSprite;
+        }
 
-          if (
-            mouseX >= buttonX &&
-            mouseX <= buttonX + buttonWidth &&
-            mouseY >= buttonY &&
-            mouseY <= buttonY + buttonHeight
-          ) {
-            window.location.href = "game.html";
-          }
+        ctx.drawImage(catSprite, cat.x - cameraX, cat.y, cat.width, cat.height);
+      }
+
+      function drawPlatforms() {
+        platforms.forEach((platform) => {
+          ctx.drawImage(
+            platformSprite,
+            platform.x - cameraX,
+            platform.y,
+            platform.width,
+            platform.height
+          );
         });
       }
 
-      function drawPlayButtonRUN() {
-        const buttonX = canvas.width / 2 - 100;
-        const buttonY = canvas.height / 2 + 50; // Positionné juste en dessous du bouton "Records"
-        const buttonWidth = 200;
-        const buttonHeight = 50;
-
-        ctx.fillStyle = "rgb(51, 195, 255)";
-        ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
-
-        ctx.fillStyle = "hsl(0, 0%, 100%)";
-        ctx.font = "20px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(
-          "Mode RUN",
-          canvas.width / 2,
-          buttonY + buttonHeight / 2 + 5
-        );
-
-        canvas.addEventListener("click", function (event) {
-          const rect = canvas.getBoundingClientRect();
-          const mouseX = event.clientX - rect.left;
-          const mouseY = event.clientY - rect.top;
-
-          if (
-            mouseX >= buttonX &&
-            mouseX <= buttonX + buttonWidth &&
-            mouseY >= buttonY &&
-            mouseY <= buttonY + buttonHeight
-          ) {
-            window.location.href = "run.html"; // Assurez-vous que l'URL est correcte
-          }
+      function drawBonuses() {
+        bonuses.forEach((bonus) => {
+          ctx.drawImage(
+            bonusSprite,
+            bonus.x - cameraX,
+            bonus.y,
+            bonus.width,
+            bonus.height
+          );
         });
       }
 
-      function drawRecordButton() {
-        const buttonX = canvas.width / 2 - 100;
-        const buttonY = canvas.height / 2; // Positionné juste en dessous du bouton "Options"
-        const buttonWidth = 200;
-        const buttonHeight = 50;
+      function drawScore() {
+        ctx.fillStyle = "black";
+        ctx.font = "24px Arial";
+        ctx.fillText(`Score: ${score}`, 10, 30);
+      }
 
-        ctx.fillStyle = "rgb(255, 56, 86)";
-        ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+      function drawShopButton() {
+        ctx.drawImage(shopSprite, canvas.width - 60, 10, 50, 50); // Dessine le bouton shop à une position fixe
+      }
+      function drawAccueilButton() {
+        ctx.drawImage(AccueilSprite, canvas.width - 120, 10, 50, 50); // Dessine le bouton shop à une position fixe
+      }
 
-        ctx.fillStyle = "hsl(0, 0%, 100%)";
-        ctx.font = "20px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(
-          "Records",
-          canvas.width / 2,
-          buttonY + buttonHeight / 2 + 5
-        );
+      function drawBonusCount() {
+        ctx.fillStyle = "black";
+        ctx.font = "24px Arial";
+        ctx.fillText(`Carotte: ${bonusCount}`, 10, 60);
+      }
 
-        canvas.addEventListener("click", function (event) {
-          const rect = canvas.getBoundingClientRect();
-          const mouseX = event.clientX - rect.left;
-          const mouseY = event.clientY - rect.top;
+      function update() {
+        if (gameOver) return;
 
+        const prevX = cat.x;
+        const prevY = cat.y;
+
+        cat.y += cat.dy;
+        cat.x += cat.dx;
+
+        score += cat.dx;
+
+        if (score > record) {
+          record = score;
+          recordElement.textContent = `Record: ${record}`;
+          saveGameState();
+        }
+
+        cat.isJumping = true;
+        let onPlatform = false;
+
+        platforms.forEach((platform) => {
           if (
-            mouseX >= buttonX &&
-            mouseX <= buttonX + buttonWidth &&
-            mouseY >= buttonY &&
-            mouseY <= buttonY + buttonHeight
+            cat.x < platform.x + platform.width &&
+            cat.x + cat.width > platform.x &&
+            cat.y < platform.y + platform.height &&
+            cat.y + cat.height >= platform.y &&
+            cat.dy >= 0
           ) {
-            showLeaderboard();
+            cat.y = platform.y - cat.height;
+            cat.dy = 0;
+            cat.isJumping = false;
+            onPlatform = true;
+          }
+
+          // Check for horizontal collision
+          if (
+            cat.x < platform.x + platform.width &&
+            cat.x + cat.width > platform.x &&
+            cat.y < platform.y + platform.height &&
+            cat.y + cat.height > platform.y
+          ) {
+            if (cat.dx > 0 && prevX + cat.width <= platform.x) {
+              cat.x = platform.x - cat.width;
+            } else if (cat.dx < 0 && prevX >= platform.x + platform.width) {
+              cat.x = platform.x + platform.width;
+            }
           }
         });
+
+        // Check for bonus collision
+        for (let i = bonuses.length - 1; i >= 0; i--) {
+          const bonus = bonuses[i];
+          if (
+            cat.x < bonus.x + bonus.width &&
+            cat.x + cat.width > bonus.x &&
+            cat.y < bonus.y + bonus.height &&
+            cat.y + cat.height > bonus.y
+          ) {
+            // Remove the bonus and add to bonus count
+            bonuses.splice(i, 1);
+            bonusCount += 1;
+            bonusCountElement.textContent = `Bonus: ${bonusCount}`;
+            saveGameState();
+          }
+        }
+
+        if (!onPlatform) {
+          cat.isJumping = true;
+        }
+
+        if (cat.y + cat.height > canvas.height) {
+          gameOver = true;
+          hasLostOnce = true;
+          if (score > record) {
+            showUsernameModal();
+          }
+        } else {
+          cat.dy += gravity;
+        }
+
+        if (cat.x + cat.width > canvas.width / 2) {
+          cameraX = cat.x - canvas.width / 2;
+        }
+
+        generatePlatforms();
       }
 
-      function showLeaderboard() {
-        leaderboard.style.display = "flex";
-        displayLeaderboard();
+      function generatePlatforms() {
+        const lastPlatform = platforms[platforms.length - 1];
+        if (
+          !lastPlatform ||
+          lastPlatform.x < canvas.width + cameraX + platformSpacing
+        ) {
+          const platformX = lastPlatform ? lastPlatform.x + platformSpacing : 0;
+          const platformY = Math.floor(
+            Math.random() * (maxPlatformHeight - minPlatformHeight) +
+              minPlatformHeight
+          );
+
+          platforms.push({
+            x: platformX,
+            y: platformY,
+            width: platformWidth,
+            height: platformHeight,
+          });
+
+          // Ajouter un bonus aléatoirement sur certaines plateformes
+          if (Math.random() < 0.2) {
+            // 20% de chance d'ajouter un bonus
+            bonuses.push({
+              x: platformX + platformWidth / 2 - 15, // Position centrée sur la plateforme
+              y: platformY - 30, // Position au-dessus de la plateforme
+              width: 30,
+              height: 30,
+            });
+          }
+
+          if (platforms.length === 1) {
+            cat.x = platformX;
+            cat.y = platformY - cat.height;
+            cat.dy = 0;
+          }
+        }
       }
 
-      function hideLeaderboard() {
-        leaderboard.style.display = "none";
+      function gameLoop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "skyblue";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(backgroundSprite, 0, 0, canvas.width, canvas.height);
+
+        drawPlatforms();
+        drawCat();
+        drawShopButton();
+        drawAccueilButton();
+        drawBonuses();
+        drawScore();
+
+        if (gameOver) {
+          ctx.fillStyle = "black";
+          ctx.font = "48px Arial";
+          ctx.fillText("Perdu", canvas.width / 2 - 50, canvas.height / 2);
+        } else {
+          update();
+          requestAnimationFrame(gameLoop);
+        }
       }
 
-      function displayLeaderboard() {
+      function restartGame() {
+        platforms = [];
+        generatePlatforms();
+        cat.dx = 0;
+        cat.dy = 0;
+        cat.isJumping = false;
+        cat.direction = "right";
+        cat.speed = 3;
+        gameOver = false;
+        cameraX = 0;
+        score = 0;
+        loadGameState();
+        gameLoop();
+      }
+
+      function startGame() {
+        if (
+          catSpriteRight.complete &&
+          catSpriteLeft.complete &&
+          platformSprite.complete &&
+          bonusSprite.complete &&
+          backgroundSprite &&
+          shopSprite.complete &&
+          AccueilSprite.complete &&
+          catHatSprite.complete &&
+          catCrownSprite.complete &&
+          catHautFormeSprite.complete
+        ) {
+          loadGameState();
+          restartGame();
+        } else {
+          catSpriteRight.onload = restartGame;
+          catSpriteLeft.onload = restartGame;
+          platformSprite.onload = restartGame;
+          bonusSprite.onload = restartGame;
+          backgroundSprite.onload = restartGame;
+        }
+      }
+
+      function showUsernameModal() {
+        usernameModal.style.display = "flex";
+      }
+
+      function hideUsernameModal() {
+        usernameModal.style.display = "none";
+      }
+
+      function saveScore(username) {
+        const leaderboardData =
+          JSON.parse(localStorage.getItem("leaderboard")) || [];
+        leaderboardData.push({ name: username, score: score });
+        leaderboardData.sort((a, b) => b.score - a.score);
+        if (leaderboardData.length > 10) {
+          leaderboardData.pop();
+        }
+        localStorage.setItem("leaderboard", JSON.stringify(leaderboardData));
+        // displayLeaderboard();
+      }
+
+      /* function displayLeaderboard() {
         const leaderboardData =
           JSON.parse(localStorage.getItem("leaderboard")) || [];
         leaderboardBody.innerHTML = "";
@@ -325,9 +456,78 @@
           row.innerHTML = `<td>${entry.name}</td><td>${entry.score}</td>`;
           leaderboardBody.appendChild(row);
         });
-      }
+        leaderboard.style.display = "flex";
+      }*/
 
-      closeButton.addEventListener("click", hideLeaderboard);
+      submitUsernameButton.addEventListener("click", () => {
+        const username = usernameInput.value.trim();
+        if (username) {
+          saveScore(username);
+          hideUsernameModal();
+        }
+      });
+
+      closeButton.addEventListener("click", () => {
+        hideUsernameModal();
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (gameOver) return;
+
+        switch (event.key) {
+          case "ArrowUp":
+            if (!cat.isJumping) {
+              cat.dy = cat.jumpStrength;
+            }
+            break;
+          case "ArrowLeft":
+            cat.dx = -cat.speed;
+            cat.direction = "left";
+            break;
+          case "ArrowRight":
+            cat.dx = cat.speed;
+            cat.direction = "right";
+            break;
+        }
+      });
+
+      document.addEventListener("keyup", (event) => {
+        switch (event.key) {
+          case "ArrowLeft":
+          case "ArrowRight":
+            cat.dx = 0;
+            break;
+        }
+      });
+
+      canvas.addEventListener("click", (event) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        // Vérifiez le clic sur le bouton "Shop"
+        if (
+          x > canvas.width - 60 &&
+          x < canvas.width - 10 &&
+          y > 10 &&
+          y < 60
+        ) {
+          window.location.href = "shop.html";
+        }
+        // Vérifiez le clic sur le bouton "Accueil"
+        else if (
+          x > canvas.width - 120 &&
+          x < canvas.width - 70 &&
+          y > 10 &&
+          y < 60
+        ) {
+          window.location.href = "index.html";
+        }
+      });
+
+      restartButton.addEventListener("click", restartGame);
+
+      startGame();
     </script>
   </body>
 </html>

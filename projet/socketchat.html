@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css" />
+    <title>Découverte des Sockets avec Java</title>
+    <style>
+      #retour {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+      }
+      .section {
+        margin: 20px 0;
+      }
+      .section-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      .about-container {
+        margin: 20px 0;
+      }
+      .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px 0;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .btn:hover {
+        background-color: #0056b3;
+      }
+      pre {
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+      code {
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="home" id="home">
+      <h1 class="home-title">
+        <span class="home-title-color">Découverte des Sockets avec Java</span>
+      </h1>
+    </section>
+
+    <section class="section" id="introduction">
+      <h2 class="section-title">Introduction</h2>
+      <div class="about-container">
+        <p>
+          Les sockets, introduits par les distributions Berkeley, permettent la
+          communication inter-processus (IPC) sur une même machine ou via un
+          réseau TCP/IP. Ils existent en deux modes :
+        </p>
+        <ul>
+          <li>
+            <strong>Mode connecté (TCP)</strong> : Connexion durable, similaire
+            à une communication téléphonique.
+          </li>
+          <li>
+            <strong>Mode non connecté (UDP)</strong> : Sans connexion durable,
+            analogue à l'envoi de courrier.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="manipulation-ip">
+      <h2 class="section-title">Manipulation des adresses IP en Java</h2>
+      <div class="about-container">
+        <p>
+          La classe <code>InetAddress</code> du package
+          <code>java.net</code> permet de manipuler les adresses IP :
+        </p>
+        <ul>
+          <li>
+            <strong>Méthodes de classe</strong> : <code>getLocalHost()</code>,
+            <code>getByName()</code>, <code>getAllByName()</code>.
+          </li>
+          <li>
+            <strong>Méthodes d'instance</strong> : <code>getHostName()</code>,
+            <code>getAddress()</code>, <code>toString()</code>.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="exemple-ip">
+      <h3 class="section-title">Exemple de manipulation d'adresse IP</h3>
+      <div class="about-container">
+        <pre><code>
+public static void main(String[] zero) {
+    InetAddress localeAdresse;
+    InetAddress serveurAdresse;
+    try {
+        localeAdresse = InetAddress.getLocalHost();
+        System.out.println("L'adresse locale est : " + localeAdresse);
+        serveurAdresse = InetAddress.getByName("tf1.fr");
+        System.out.println("L'adresse du serveur de TF1 est : " + serveurAdresse);
+    } catch (UnknownHostException e) {
+        e.printStackTrace();
+    }
+}
+        </code></pre>
+      </div>
+    </section>
+
+    <section class="section" id="creation-serveur">
+      <h2 class="section-title">Création d'un serveur avec sockets</h2>
+      <div class="about-container">
+        <pre><code>
+public static void main(String[] args) {
+    ServerSocket socketserver;
+    Socket socketduserveur;
+    try {
+        socketserver = new ServerSocket(2024);
+        socketduserveur = socketserver.accept();
+        System.out.println("Un client s'est connecté !");
+        socketserver.close();
+        socketduserveur.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+        </code></pre>
+      </div>
+    </section>
+
+    <section class="section" id="client-serveur">
+      <h2 class="section-title">Client se connectant au serveur</h2>
+      <div class="about-container">
+        <pre><code>
+public static void main(String[] args) {
+    Socket socket;
+    try {
+        socket = new Socket(InetAddress.getLocalHost(), 2024);
+        socket.close();
+    } catch (UnknownHostException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+        </code></pre>
+      </div>
+    </section>
+
+    <section class="section" id="echange-messages">
+      <h2 class="section-title">Échange de messages entre client et serveur</h2>
+      <div class="about-container">
+        <p>
+          <strong>Serveur</strong> : Utilise <code>PrintWriter</code> pour
+          envoyer des messages.
+        </p>
+        <p>
+          <strong>Client</strong> : Utilise <code>BufferedReader</code> pour
+          lire les messages.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="gestion-connexions">
+      <h2 class="section-title">
+        Gestion des connexions multiples avec les threads
+      </h2>
+      <div class="about-container">
+        <p>
+          Utilisation de threads pour gérer plusieurs connexions simultanées :
+        </p>
+        <pre><code>
+public class Serveur {
+    public static void main(String[] args) {
+        ServerSocket socket;
+        try {
+            socket = new ServerSocket(2024);
+            Thread t = new Thread(new Accepter_clients(socket));
+            t.start();
+            System.out.println("Mes employeurs sont prêts !");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class Accepter_clients implements Runnable {
+    private ServerSocket socketserver;
+    private Socket socket;
+    private int nbrclient = 1;
+
+    public Accepter_clients(ServerSocket s) {
+        socketserver = s;
+    }
+
+    public void run() {
+        try {
+            while (true) {
+                socket = socketserver.accept();
+                System.out.println("Le client numéro " + nbrclient + " est connecté !");
+                nbrclient++;
+                socket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+        </code></pre>
+      </div>
+    </section>
+
+    <section class="section" id="exercices">
+      <h2 class="section-title">Exercices proposés</h2>
+      <div class="about-container">
+        <ol>
+          <li>
+            <strong>Chat public</strong> : Permettre à tous les utilisateurs
+            connectés de chatter ensemble.
+          </li>
+          <li>
+            <strong>Chat ciblé</strong> : Permettre de choisir un destinataire
+            spécifique.
+          </li>
+          <li>
+            <strong>Diffusion de l'historique des messages</strong> : Afficher
+            l'historique des discussions à un nouvel utilisateur.
+          </li>
+          <li>
+            <strong>Création de salons</strong> : Permettre la création de
+            salons de discussion privés.
+          </li>
+          <li>
+            <strong>Authentification des utilisateurs</strong> : Vérifier les
+            identifiants des utilisateurs à la connexion.
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="liens">
+      <h2 class="section-title">Liens Utiles</h2>
+      <div class="about-container">
+        <button
+          class="btn"
+          onclick="location.href='https://github.com/sara789456123/Socket_Chat';"
+        >
+          Lien vers le GitHub
+        </button>
+      </div>
+    </section>
+
+    <button id="retour" onclick="location.href='../index.html#workforma';">
+      Retour
+    </button>
+
+    <footer class="footer">
+      <p>&copy; 2025 Découverte des Sockets avec Java. Tous droits réservés.</p>
+    </footer>
+  </body>
+</html>

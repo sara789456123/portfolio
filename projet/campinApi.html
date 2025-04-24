@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css" />
+    <title>Camping API</title>
+    <style>
+      #retour {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+      }
+      #images{
+        width: 100px;
+      }
+      #imagesS{
+        width: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="home" id="home">
+      <h1 class="home-title">
+        <span class="home-title-color">Camping API</span>
+      </h1>
+      <br />
+
+      <p>
+        Votre solution pour gérer les données de camping de manière efficace.
+      </p>
+      <br />
+      <a href="#description" class="btn">En savoir plus</a>
+    </section>
+
+    <section class="section" id="description">
+      <h2 class="section-title">Description</h2>
+      <div class="about-container">
+        <p>
+          Camping API est une application Spring Boot qui fournit une API
+          RESTful pour gérer les données liées au camping. Elle permet
+          l'authentification des utilisateurs, la gestion des comptes, et la
+          persistance des données.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="fonctionnement">
+      <h2 class="section-title">Fonctionnement</h2>
+      <div class="about-container">
+        <p>
+          L'application permet aux utilisateurs de s'authentifier, de gérer
+          leurs comptes, de réserver des créneaux pour des activités, et de
+          s'inscrire ou se désinscrire d'activités.
+        </p>
+        <br />
+        <h3>Ce qu'il y a dans l'application :</h3>
+        <br />
+        <ul>
+          <p>
+            <strong>Authentification :</strong> Les utilisateurs s'authentifient
+            via un point de terminaison <code>POST /auth/login</code>, qui
+            retourne un jeton JWT pour les requêtes sécurisées.
+          </p>
+          <br />
+          <p>
+            <strong>Gestion des Comptes :</strong> Les comptes peuvent être
+            récupérés, bloqués, et gérés via des points de terminaison
+            spécifiques, nécessitant des rôles d'utilisateur appropriés (<code
+              >client</code
+            >
+            ou <code>admin</code>).
+          </p>
+          <br />
+          <p>
+            <strong>Gestion des Créneaux :</strong> Les créneaux horaires
+            peuvent être récupérés pour planifier des activités.
+          </p>
+          <br />
+          <p>
+            <strong>Gestion des Inscriptions :</strong> Les utilisateurs peuvent
+            s'inscrire ou se désinscrire d'activités via des points de
+            terminaison dédiés.
+          </p>
+          <br />
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="technologies">
+      <h2 class="section-title">Technologies Utilisées</h2>
+      <img src="../img/java.png" alt="java" id="images"  />
+      <img src="../img/spring.png" alt="spring" id="images"  />
+      <img src="../img/maven2.png" alt="maven"id="images" />
+      <img src="../img/sql.png" alt="maven" style="width: 160px;"/>
+    </section>
+
+    <section class="section" id="installation">
+      <h2 class="section-title">Installation</h2>
+      <div class="about-container">
+        <ol>
+          <p>
+            1. Clonez le dépôt :
+            <code
+              >git clone https://github.com/your-username/camping_api.git</code
+            >
+          </p>
+          <p>2. la base de données MySQL.</li>
+          <p>3. Construisez le projet : <code>mvn clean install</code></li>
+          <p>4. Exécutez l'application : <code>mvn spring-boot:run</code></li>
+        </ol>
+      </div>
+    </section>
+    <button id="retour" onclick="location.href='../index.html#workforma';">Retour</button>
+    <footer class="footer">
+      <p>&copy; 2025 Camping API. Tous droits réservés.</p>
+    </footer>
+  </body>
+</html>

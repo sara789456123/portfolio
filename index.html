@@ -6,7 +6,6 @@
     <title>Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-       
 </head>
 <body>
     <header class="l-header">
@@ -21,13 +20,16 @@
                         <a href="#home" class="nav-link active">Accueil</a>
                     </li>
                     <li class="nav-item">
+                        <a href="#whatis" class="nav-link">Présentation</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#about" class="nav-link">A propos</a>
                     </li>
                     <li class="nav-item">
                         <a href="#skills" class="nav-link">Compétences</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#work" class="nav-link">Projets</a>
+                        <a href="#workforma" class="nav-link">Projets</a>
                     </li>
                     <li class="nav-item">
                         <a href="#stage" class="nav-link">Stage</a>
@@ -35,12 +37,10 @@
                     <li class="nav-item">
                         <a href="#veille" class="nav-link">Veille Technologique</a>
                     </li>
-                   
                 </ul>
             </div>
 
             <div class="nav-toggle" id="nav-toggle">
-          
             </div>
         </nav>
     </header>
@@ -52,17 +52,14 @@
                     Portfolio, <br />de <span class="home-title-color">Gervoise Sara</span><br />
                     étudiante en BTS SIO </span><br />(SLAM)
                 </h1><br><br><br>
-              
             </div>
-
         </section>
 
         <section class="about section" id="about">
             <h2 class="section-title">A propos</h2>
-
             <div class="about-container">
                 <div>
-                    <h2 class="about-subtitle">Présentation</h2>
+                    <h2 class="about-subtitle">Parcours</h2>
                     <p class="about-text">
                         Salut, moi c'est Sara GERVOISE👋
 Je suis actuellement étudiante au lycée Raymond Pointcaré en deuxième année de BTS SIO (Services Informatiques aux Organisations) dans l'option SLAM (Solutions Logicielles et Application Métier) qui en gros est une option spécialisée pour le développement.
@@ -78,83 +75,92 @@ Vous retrouverez ci-dessous mon CV ainsi que mes différents projets 👩‍💻
             </div>
         </section>
 
+        <section class="about section" id="whatis">
+            <h2 class="section-title">C'est quoi le BTS SIO ?</h2>
+            <div class="card-container">
+                        Le BTS SIO (Services Informatiques aux Organisations) est un diplôme de niveau Bac+2 qui forme des techniciens supérieurs en informatique. Il se décline en deux options :
+                    </p>
+                        <li><strong>SISR (Solutions d'Infrastructure, Systèmes et Réseaux)</strong> : spécialisée dans la gestion et la maintenance des infrastructures réseau et systèmes.</li>
+                        <li><strong>SLAM (Solutions Logicielles et Applications Métiers)</strong> : spécialisée dans le développement d'applications.</li>
+                    </ul>
+                        Ce diplôme permet d'acquérir des compétences techniques et professionnelles pour intégrer le marché du travail ou poursuivre des études supérieures.
+                    </p>
+            </div>
+        </section>
+
         <section class="skills section" id="skills">
             <h2 class="section-title">Compétences</h2>
-
-            <div class="skills-container bd-grid">
-                <div>
-                    <h2 class="skills-subtitle">Professional Skills</h2>
-                    <p class="skills-text">
-                       <li>Développement : Web (Html, CSS, Java Script, PHP), bureau (Java FX,Windows Forms), mobile (Java & Android Studio), Github, UML, MCV, Android, React, Socket</li>
-                       <li>Base de donnée: MySQL/MariaDB, langage SQL, phpMyAdmin, modèle relationnel (Merise), droit utilisateur, SQL procedural (Trigger, procédure, fonctions)</li>
-                       <li>Réseau: protocole TCP/IP, routage, modèle OSI, PacketTracer</li>
-                       <li>Systèmes: Windows (clients et serveurs) & GNU Linux (maintenance et utilisation)</li>
-                       <li>Cybersécurité & RGPD</li>
-                    </p><br>
-
-                    <div class="skills-data">
-                        <div class="skills-names">
-                            <i class="bx bxl-html5 skills-icon"></i>
-                            <span class="skills-name">HTML5</span>
-                        </div>
-
-                        <div>
-                            <span class="skills-percentage">95%</span>
-                        </div>
-
-                        <div class="skills-bar skills-html"></div>
-                    </div>
-
-                    <div class="skills-data">
-                        <div class="skills-names">
-                            <i class="bx bxl-css3 skills-icon"></i>
-                            <span class="skills-name">CSS3</span>
-                        </div>
-
-                        <div>
-                            <span class="skills-percentage">85%</span>
-                        </div>
-
-                        <div class="skills-bar skills-css"></div>
-                    </div>
-
-                    <div class="skills-data">
-                        <div class="skills-names">
-                            <i class="bx bxl-javascript skills-icon"></i>
-                            <span class="skills-name">JAVASCRIPT</span>
-                        </div>
-
-                        <div>
-                            <span class="skills-percentage">65%</span>
-                        </div>
-
-                        <div class="skills-bar skills-js"></div>
-                    </div>
-
-                    <div class="skills-data">
-                        <div class="skills-names">
-                            <i class="bx bxs-paint skills-icon"></i>
-                            <span class="skills-name">Php</span>
-                        </div>
-
-                        <div>
-                            <span class="skills-percentage">85%</span>
-                        </div>
-
-                        <div class="skills-bar skills-ux"></div>
-                    </div>
+            <div class="card-container">
+                <div class="card">
+                    <h3 class="card-title">Développement</h3>
+                    <ul class="card-list">
+                        <li>Web : HTML, CSS, JavaScript, PHP</li>
+                        <li>Bureau : Java FX, Windows Forms</li>
+                        <li>Mobile : Java & Android Studio</li>
+                        <li>Autres : Github, UML, MVC, Android, React, Socket</li>
+                    </ul>
                 </div>
-
-                <div>
-                    <img src="https://i.postimg.cc/52LWbPyt/work3.jpg" alt="image" class="skills-img">
+                <div class="card">
+                    <h3 class="card-title">Base de données</h3>
+                    <ul class="card-list">
+                        <li>MySQL/MariaDB, langage SQL, phpMyAdmin</li>
+                        <li>Modèle relationnel (Merise)</li>
+                        <li>Droit utilisateur, SQL procédural (Trigger, procédure, fonctions)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Réseau</h3>
+                    <ul class="card-list">
+                        <li>Protocole TCP/IP, routage, modèle OSI, PacketTracer</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Systèmes</h3>
+                    <ul class="card-list">
+                        <li>Windows (clients et serveurs) & GNU Linux (maintenance et utilisation)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Cybersécurité & RGPD</h3>
                 </div>
             </div>
         </section>
 
-        <section class="work section" id="work">
-            <h2 class="section-title">Projets</h2>
+        <section class="work section" id="workforma">
+            <h2 class="section-title">Projets en cours de formation</h2>
+            <div class="work-container bd-grid">
+                <div class="work-img">
+                    <h2>Camping API</h2>
+                    <a href="./projet/campinApi.html">
+                        <img src="./img/caping.jpg" alt="image">
+                    </a>
+                </div>
 
-           
+                <div class="work-img">
+                    <h2>Ticketing (Stage)</h2>
+                    <a href="./projet/ticketing.html">
+                        <img src="./img/ticketing.png" alt="image">
+                    </a>
+                </div>
+
+                <div class="work-img">
+                    <h2>Socket Chat</h2>
+                    <a href="./projet/socketchat.html">
+                        <img src="./img/tcht.jpg" alt="image">
+                    </a>
+                </div>
+
+                <div class="work-img">
+                    <h2>API Cafe</h2>
+                    <a href="./projet/ApiCafe.html">
+                        <img src="./img/cofe.jpg" alt="image">
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="work section">
+            <h2 class="section-title">Projets</h2>
             <div class="work-container bd-grid">
                 <div class="work-img">
                     <h2>Quizz</h2>
@@ -180,7 +186,7 @@ Vous retrouverez ci-dessous mon CV ainsi que mes différents projets 👩‍💻
                 <div class="work-img">
                     <h2>Clicker Capibara</h2>
                     <a href="./clickerCapi/index.html">
-                        <img src="https://i.postimg.cc/m2MTgZ6R/work5.jpg" alt="image">
+                        <img src="https://i.pinimg.com/736x/4e/1d/6c/4e1d6c5c01b095a67449586139a4ec69.jpg" alt="image">
                     </a>
                 </div>
             </div>
@@ -227,16 +233,14 @@ Vous retrouverez ci-dessous mon CV ainsi que mes différents projets 👩‍💻
                 <div class="work-img">
                         <img src="./img_epreuve/Pix.png" alt="image">
                     </a>
-                           
-            <button class="btn" onclick="location.href='./pdf/pix.pdf';">
+                            <button class="btn" onclick="location.href='./pdf/pix.pdf';">
                 Mon attestation Pix
             </button>
                 </div>
             <div class="work-img">
                 <img src="./img_epreuve/Secnum.png" alt="image">
             </a>
-                       
-        <button class="btn" onclick="location.href='./pdf/Secnumdiplome.pdf';">
+                        <button class="btn" onclick="location.href='./pdf/Secnumdiplome.pdf';">
             Mon attestation Secnum
         </button>
             </div>
@@ -244,26 +248,21 @@ Vous retrouverez ci-dessous mon CV ainsi que mes différents projets 👩‍💻
             <div class="work-img">
                 <img src="./img_epreuve/tableau.png" alt="image">
             </a>
-                       
-        <button class="btn" onclick="location.href='tableau.pdf';">
+                        <button class="btn" onclick="location.href='./pdf/tableau.pdf';">
             Mon tableaux d'E4
         </button>
             </div>
         </section>
-</main>
-<br><br>
-    
-    
+    </main>
+    <br><br>
 
     <footer class="footer">
         <p class="footer-title">Sara</p>
-
         <div class="footer-social">
             <a href="#" class="footer-icon"><i class="bx bxl-facebook"></i></a>
             <a href="#" class="footer-icon"><i class="bx bxl-instagram"></i></a>
             <a href="#" class="footer-icon"><i class="bx bxl-twitter"></i></a>
         </div>
-
         <p>&#169; 2024 Copyright all rights reserved</p>
     </footer>
 
