@@ -32,41 +32,55 @@
       .about-container {
         margin: 20px 0;
       }
-      .btn {
-        display: inline-block;
-        padding: 10px 20px;
-        margin: 10px 0;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        text-decoration: none;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+
+      .cafe {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0; /* Adjust padding as needed */
       }
+      .cafe img {
+        max-width: 100%; /* Ensure images are responsive */
+        height: auto;
+      }
+      .btn {
+        padding: 15px 35px;
+        background: #00ffcc;
+        color: #0a0a0a;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out;
+        font-size: 18px;
+      }
+
       .btn:hover {
-        background-color: #0056b3;
+        background: #00cca3;
+        color: #fff;
       }
     </style>
   </head>
   <body>
     <section class="home" id="home">
       <h1 class="home-title">
-        <span class="home-title-color">Api Cafe</span>
+        <span class="home-title-color">Api Cafe</span><br />
+        <a href="#Api" class="btn">En savoir plus</a>
       </h1>
     </section>
 
-    <h2 class="section-title">Api Cafe</h2>
+    <h2 class="section-title" id="Api">Api Cafe</h2>
+
     <div class="about-container">
       <p>
         L'application contient une API faite en MVC et testée sur Postman avec
         la possibilité de se connecter avec un jeton et d'autres routes.
       </p>
+      <div class="cafe">
+        <img src="../img/postman.png" alt="Postman" />
+      </div>
     </div>
-  </section>
 
-
-  <h2 class="section-title">Interface React</h2>
+    <h2 class="section-title">Interface React</h2>
     <div class="about-container">
       <p>
         Ensuite, création d'un projet React pour interroger l'API et afficher
@@ -74,8 +88,13 @@
         filtrer, modifier, ajouter ou supprimer si l'on est administrateur, et
         une page d'authentification.
       </p>
+      <div class="cafe">
+        <img src="../img/react1.png" alt="React Interface 1" />
+      </div>
+      <div class="cafe">
+        <img src="../img/react2.png" alt="React Interface 2" />
+      </div>
     </div>
-  </section>
 
     <button id="retour" onclick="location.href='../index.html#workforma';">
       Retour

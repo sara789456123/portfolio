@@ -21,10 +21,39 @@
       opacity: 0.7;
       transition: opacity 0.3s ease;
     }
+    .btn {
+      padding: 15px 35px;
+      background: #00ffcc;
+      color: #0a0a0a;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+      font-size: 18px;
+    }
+
+    .btn:hover {
+      background: #00cca3;
+      color: #fff;
+    }
   </style>
   <body>
     <h1>RepairDesk</h1>
+    <a href="#description" class="btn">En savoir plus</a>
+
     <img src="../img/mcdTicketing.png" alt="" />
+
+    <section class="section" id="description">
+      <h2 class="section-title">Description</h2>
+      <div class="about-container">
+        <p>
+          Camping API est une application Spring Boot qui fournit une API
+          RESTful pour gérer les données liées au camping. Elle permet
+          l'authentification des utilisateurs, la gestion des comptes, et la
+          persistance des données.
+        </p>
+      </div>
+    </section>
 
     <p>
       Le deuxième projet est destiné à l’entreprise SENDIX pour faciliter la
