@@ -4,48 +4,89 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../style.css" />
-
     <title>Ticketing</title>
+    <style>
+      #retour {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+      }
+      #images {
+        width: 100px;
+      }
+      #imagesS {
+        width: 100px;
+      }
+      .btn {
+        padding: 15px 35px;
+        background: #00ffcc;
+        color: #0a0a0a;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out;
+        font-size: 18px;
+      }
+
+      .btn:hover {
+        background: #00cca3;
+        color: #fff;
+      }
+      .home {
+        text-align: center;
+        padding: 50px;
+      }
+      .home-title {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+      }
+      .home-title-color {
+        color: #00cca3;
+      }
+      .center-image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+      .center-text {
+        text-align: center;
+        margin: 20px auto;
+        width: 80%;
+      }
+      .center-button {
+        display: block;
+        margin: 20px auto;
+      }
+    </style>
   </head>
-  <style>
-    #retour {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 15px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
-    }
-    .btn {
-      padding: 15px 35px;
-      background: #00ffcc;
-      color: #0a0a0a;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease-in-out;
-      font-size: 18px;
-    }
-
-    .btn:hover {
-      background: #00cca3;
-      color: #fff;
-    }
-  </style>
   <body>
-    <h1>RepairDesk</h1>
-    <a href="#description" class="btn">En savoir plus</a>
+    <section class="home" id="home">
+      <h1 class="home-title">
+        <span class="home-title-color">RepairDesk</span>
+      </h1>
+      <br />
+      <p>
+        Votre solution pour gérer les tickets de support technique de manière
+        efficace.
+      </p>
+      <br />
+      <a href="#description" class="btn">En savoir plus</a>
+    </section>
 
-    <img src="../img/mcdTicketing.png" alt="" />
+    <img src="../img/mcdTicketing.png" alt="" class="center-image" />
 
     <section class="section" id="description">
       <h2 class="section-title">Description</h2>
-      <div class="about-container">
+      <div class="about-container center-text">
         <p>
           Camping API est une application Spring Boot qui fournit une API
           RESTful pour gérer les données liées au camping. Elle permet
@@ -55,26 +96,30 @@
       </div>
     </section>
 
-    <p>
-      Le deuxième projet est destiné à l’entreprise SENDIX pour faciliter la
-      gestion des clients et leurs besoins. Création d'un site web pour la
-      gestion de tickets de support technique. Voici le processus : Accueil
-      client : Lorsqu'un client arrive en boutique pour déposer un appareil,
-      Maxime crée un nouveau ticket. Saisie des informations : Maxime enregistre
-      dans le ticket : Les coordonnées du client (dont son adresse e-mail) La
-      marque et le modèle de l'appareil Le diagnostic initial du problème Suivi
-      en ligne : Le client reçoit un e-mail contenant un lien vers une page web
-      personnalisée. Interface client : Sur cette page, le client peut :
-      Consulter toutes les informations concernant son appareil Suivre
-      l'avancement de la réparation Voir les mises à jour du statut de son
-      ticket Ce système permet une gestion efficace des demandes de support et
-      offre aux clients un accès facile aux informations sur leur appareil en
-      réparation. Pour ce projet j’ai utilisé les logiciels/sites fileZilla , Vs
-      Code, CodePen ,mdn web docs, WampServer 64, phpmyadmin,...
-    </p>
-    <img src="../img/ticketing.png" alt="" />
+    <div class="center-text">
+      <p>
+        Le deuxième projet est destiné à l’entreprise SENDIX pour faciliter la
+        gestion des clients et leurs besoins. Création d'un site web pour la
+        gestion de tickets de support technique. Voici le processus : Accueil
+        client : Lorsqu'un client arrive en boutique pour déposer un appareil,
+        Maxime crée un nouveau ticket. Saisie des informations : Maxime
+        enregistre dans le ticket : Les coordonnées du client (dont son adresse
+        e-mail) La marque et le modèle de l'appareil Le diagnostic initial du
+        problème Suivi en ligne : Le client reçoit un e-mail contenant un lien
+        vers une page web personnalisée. Interface client : Sur cette page, le
+        client peut : Consulter toutes les informations concernant son appareil
+        Suivre l'avancement de la réparation Voir les mises à jour du statut de
+        son ticket Ce système permet une gestion efficace des demandes de
+        support et offre aux clients un accès facile aux informations sur leur
+        appareil en réparation. Pour ce projet j’ai utilisé les logiciels/sites
+        fileZilla , Vs Code, CodePen ,mdn web docs, WampServer 64,
+        phpmyadmin,...
+      </p>
+    </div>
+
+    <img src="../img/ticketing.png" alt="" class="center-image" />
     <button
-      class="btn"
+      class="btn center-button"
       onclick="location.href='https://github.com/sara789456123/Ticketing';"
     >
       lien vers le github
